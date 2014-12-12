@@ -1,0 +1,151 @@
+
+        <section class="panel">
+            <header class="panel-heading">
+               Update Guest
+                <span class="tools pull-right">
+                    <!-- <a href="#/r/new_guest/"> Add Guest</a> -->
+                 </span>
+            </header>
+            <div class="row">
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6"><h3 class="{{guest_message_class}}">{{guest_message}}</h3></div>
+                <div class="col-sm-3"></div>
+            </div>
+            <div class="panel-body">
+
+                <form name="guest_form" ng-submit="updateGuest(guest_form)" novalidate>
+                    <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-2">
+                            <label>First Name*</label>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input type="text" placeholder="First Name" class="form-control" ng-model="guest_edit.first_name" name="first_name" required>
+                                <span class="help-block" ng-show="guest_form.first_name.$error.required  && guest_form_submited">Please enter first name.</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-2">
+                            <label>Last Name*</label>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input type="text" placeholder="Last Name" class="form-control" ng-model="guest_edit.last_name" name="last_name" required>
+                                <span class="help-block" ng-show="guest_form.last_name.$error.required  && guest_form_submited">Please enter last name.</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-2">
+                            <label>Mobile Phone*</label>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <input type="text" ng-model="guest_edit.mobile_phone" name="mobile_phone" ng-pattern="/\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})/" ng-minlength="10" ng-maxlength="12" class="form-control" placeholder="Mobile No" required>     
+                                <span class="help-block" ng-show="guest_form.mobile_phone.$error.required  && guest_form_submited">Mobile no is required</span>
+                                <span class="help-block" ng-show="guest_form.mobile_phone.$error.pattern && guest_form_submited">Please enter valid mobile number</span>
+                                <span class="help-block" ng-show="(guest_form.mobile_phone.$error.minlength || usersignup.mobileno.$error.maxlength) && guest_form_submited">Mobile Number should be of 10 - 12 digit</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-2">
+                            <label>Email Address*</label>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                              <input type="email" class="form-control" ng-model="guest_edit.email_address" name="email_address" placeholder="Email Address" required/>
+                              <span class="help-block" ng-show="guest_form.email_address.$error.required  && guest_form_submited">Email is required</span>
+                              <span class="help-block" ng-show="guest_form.$error.email && guest_form_submited">Please type valid email address</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-2">
+                            <label>Permanent Pass*</label>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <select class="form-control" ng-model="guest_edit.permanent_pass" name="permanent_pass" required>
+                                  <option value="">--Parmanent pass--</option>
+                                  <option value="true" ng-selected="guest_edit.favourite==true">Yes</option>
+                                  <option value="false" ng-selected="guest_edit.favourite==false">No</option>
+                                </select>
+                                <span class="help-block" ng-show="guest_form.permanent_pass.$error.required  && guest_form_submited">Please select permanent pass type.</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-2">
+                            <label>Favourite*</label>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                              <select class="form-control" ng-model="guest_edit.favourite" name="favourite" required>
+                                  <option value="">--Favourite--</option>
+                                  <option value="true" ng-selected="guest_edit.favourite==true">Yes</option>
+                                  <option value="false" ng-selected="guest_edit.favourite==false">No</option>
+                                </select>
+                                <span class="help-block" ng-show="guest_form.favourite.$error.required  && guest_form_submited">Please select favourite type.</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-2">
+                            <label>Pass Status*</label>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                              <select class="form-control" ng-model="guest_edit.guest_pass_status" name="guest_pass_status" required>
+                                  <option value="">--Pass Status--</option>
+                                  <option value="active" ng-selected="guest_edit.guest_pass_status=='active'">Active</option>
+                                  <option value="inactive" ng-selected="guest_edit.guest_pass_status=='inactive'">Inactive</option>
+                                </select>
+                                <span class="help-block" ng-show="guest_form.guest_pass_status.$error.required  && guest_form_submited">Please select pass status.</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-2">
+                            <label>Status*</label>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                              <select class="form-control" ng-model="guest_edit.status" name="status" required>
+                                  <option value="">--Status--</option>
+                                  <option value="active" ng-selected="guest_edit.status=='active'">Active</option>
+                                  <option value="inactive" ng-selected="guest_edit.status=='inactive'">Inactive</option>
+                                </select>
+                                <span class="help-block" ng-show="guest_form.status.$error.required  && guest_form_submited">Please select status type.</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-3"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-2"></div>
+                        <div class="col-sm-4">
+                            <button type="submit" href="javascript:;" class="btn btn-primary">Update</button>
+                            <a href="#/r/manage_guest" class="btn btn-primary">Cancel</a>
+                        </div>
+                        <div class="col-sm-3"></div>
+                    </div>
+                </form>
+            </div>
+        </section>

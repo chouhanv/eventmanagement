@@ -1,0 +1,148 @@
+<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="addResident">
+    <div class="modal-dialog">
+        <form name="resident_signup_form" ng-submit="residentSignUp(resident_signup_form)" novalidate>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button aria-hidden="true" data-dismiss="modal" class="close ngdialog-close" type="button">×</button>
+                    <h4 class="modal-title">Add Resident</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-10">
+                            <h4 class="{{resident_form_header_class}}">{{resident_form_header}}</h4>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-4">
+                            <label>Account Type*</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <select class="form-control" ng-model="resident_signup.account_type" name="account_type" required>
+                                  <option value="">--Account Type--</option>
+                                  <option value="primary">Primary</option>
+                                  <option value="secondary">Secondary</option>
+                                </select>
+                                <span class="help-block" ng-show="resident_signup_form.account_type.$error.required  && resident_form_submited">Please select account type.</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-1"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-4">
+                            <label>First Name*</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input type="text" placeholder="First Name" class="form-control" ng-model="resident_signup.first_name" name="first_name" required>
+                                <span class="help-block" ng-show="resident_signup_form.first_name.$error.required  && resident_form_submited">Please enter first name.</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-1"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-4">
+                            <label>Last Name*</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input type="text" placeholder="Last Name" class="form-control" ng-model="resident_signup.last_name" name="last_name" required>
+                                <span class="help-block" ng-show="resident_signup_form.last_name.$error.required  && resident_form_submited">Please enter last name.</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-1"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-4">
+                            <label>Home Phone*</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input type="text" ng-model="resident_signup.home_phone" name="home_phone" ng-pattern="/\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})/" ng-minlength="10" ng-maxlength="12" class="form-control" placeholder="Mobile No" required>     
+                                <span class="help-block" ng-show="resident_signup_form.home_phone.$error.required  && resident_form_submited">Mobile no is required</span>
+                                <span class="help-block" ng-show="resident_signup_form.home_phone.$error.pattern && resident_form_submited">Please enter valid phone number</span>
+                                <span class="help-block" ng-show="resident_signup_form.home_phone.$error.minlength || usersignup.mobileno.$error.maxlength">Number should be of 10 - 12 digit</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-1"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-4">
+                            <label>Mobile Phone*</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input type="text" ng-model="resident_signup.mobile_phone" name="mobile_phone" ng-pattern="/\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})/" ng-minlength="10" ng-maxlength="12" class="form-control" placeholder="Mobile No" required>     
+                                <span class="help-block" ng-show="resident_signup_form.mobile_phone.$error.required  && resident_form_submited">Mobile no is required</span>
+                                <span class="help-block" ng-show="resident_signup_form.mobile_phone.$error.pattern && resident_form_submited">Please enter valid mobile number</span>
+                                <span class="help-block" ng-show="resident_signup_form.mobile_phone.$error.minlength || usersignup.mobileno.$error.maxlength">Mobile Number should be of 10 - 12 digit</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-1"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-4">
+                            <label>Email Address</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input type="email" class="form-control" ng-model="resident_signup.email_address" name="email_address" placeholder="Email Address" required/>
+                                <span class="help-block" ng-show="resident_signup_form.email_address.$error.required  && resident_form_submited">Email is required</span>
+                                <span class="help-block" ng-show="resident_signup_form.$error.email && resident_form_submited">Please type valid email address</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-1"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-4">
+                            <label>Password*</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input type="password" ng-model="resident_signup.password" name="password" ng-minlength="6" class="form-control" placeholder="Password" required>
+                                <span class="help-block" ng-show="resident_signup_form.password.$error.required  && resident_form_submited">Password is required</span>
+                                <span class="help-block" ng-show="resident_signup_form.password.$error.minlength">Password must be at least 6 characters.</span> 
+                            </div>
+                        </div>
+                        <div class="col-sm-1"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-4">
+                            <label>Confirm Password*</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Confirm Password" ng-model="resident_signup.confirm_password" name="confirm_password" required>
+                                <span class="help-block" ng-show="!resident_signup_form.confirm_password.$error.required && resident_signup.confirm_password != resident_signup.password">Password & Confirm Password do not match</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-1"></div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default ngdialog-close">Close</button>
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

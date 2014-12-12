@@ -1,0 +1,50 @@
+<div class="row" data-ng-init="resident()">
+        <div class="col-sm-12">
+        <section class="panel">
+        <header class="panel-heading">
+           Authorize and Unauthorize Residence User
+            <span class="tools pull-right">
+                <a href="javascript:;" class="fa fa-chevron-down"></a>
+                <a href="javascript:;" class="fa fa-times"></a>
+             </span>
+        </header>
+        <div class="panel-body">
+        <div class="adv-table">
+        <table  class="display table table-bordered table-striped" id="dynamic-table">
+        <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Mobile Number</th>
+            <th class="hidden-phone">Email Address</th>
+            <th class="hidden-phone">Activity</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr class="gradeX" ng-repeat="resident in residents">
+            <td>{{resident.first_name}}</td>
+            <td>{{resident.last_name}}</td>
+            <td>{{resident.mobile_phone}}</td>
+            <td>{{resident.email_address}}</td>
+            <td>
+                <span ng-if=resident.status=="active"><input type="button" value="Active" class="btn btn-success" ></span>
+                <span ng-if=resident.status=="deactive"><input type="button" value="Deactive" class="btn btn-danger"></span>
+            </td>
+        </tr>
+        </tbody>
+        <!-- <tfoot>
+        <tr>
+            <th>Rendering engine</th>
+            <th>Browser</th>
+            <th>Platform(s)</th>
+            <th class="hidden-phone">Engine version</th>
+            <th class="hidden-phone">CSS grade</th>
+        </tr>
+        </tfoot> -->
+        </table>
+        </div>
+        </div>
+        </section>
+        </div>
+        </div>

@@ -1,0 +1,41 @@
+<div class="row" data-ng-init="myGuest()">
+    <div class="col-sm-12">
+        <section class="panel">
+            <header class="panel-heading">
+               Guest List
+                <span class="tools pull-right">
+                    <a href="#/r/new_guest">Add Guest</a>
+                 </span>
+            </header>
+            <div class="panel-body">
+                <div class="adv-table">
+                    <table  class="display table table-bordered table-striped" id="dynamic-table">
+                        <thead>
+                            <tr>
+                                <th>First</th>
+                                <th>Mobile Number</th>
+                                <th>Email Address</th>
+                                <th>Parmanent Pass</th>
+                                <th>Favourite</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr class="gradeX" ng-repeat="guest in guests">
+                                <td>{{guest.first_name}} {{guest.last_name}}</td>
+                                <td>{{guest.mobile_phone}}</td>
+                                <td>{{guest.email_address}}</td>
+                                <td>{{guest.permanent_pass?"Yes":"No"}}</td>
+                                <td>{{guest.favourite?"Yes":"No"}}</td>
+                                <td>{{guest.status == 'active'?"Active":"Deactive"}}</td>
+                                <td><a href="#/r/guest_edit" ng-click="guestEdit(guest)">Update</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

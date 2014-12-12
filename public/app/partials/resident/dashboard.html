@@ -1,0 +1,226 @@
+<div class="row">
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <header class="panel-heading hdng-grey">
+                        Active Residents
+                        <!-- <span class="tools pull-right">
+                            <a href="javascript:;" class="fa fa-chevron-down"></a>
+                        </span> -->
+                    </header>
+                    <div class="panel-body residents-list" data-ng-init="getSimilarResidents()">
+                		<div class="active-resident non-actv-cls" id="res-div-{{similar_resident.id}}" ng-repeat="similar_resident in similar_residents" ng-click="setGuestQueryResident(similar_resident.id);">
+                			<!--<span class="active-resident-yellow">P</span>-->
+                			<label class="labl-name">{{similar_resident.first_name + " " + similar_resident.last_name}}</label>
+                			<p>{{similar_resident.account_type}}</p>
+                		</div>
+                    </div>
+					<div class="add-resident">
+                			<p style="text-align:center">
+                				<a href="javascript:;" popups="/app/partials/resident/addresident.html" ng-click="clearSignUpForm()" class="btn btn-primary btn-block btn-add-resdnt"><span class="plus-wrppr"><i class="fa fa-plus"></i></span> Add Resident</a>
+                			</p>
+                		</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <div class="col-md-9" ng-if="!isShowGuestDetail">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <header class="panel-heading">
+                        <label class="hdng-grey">Guest List</label>
+                        	<a class="sort {{isActiveClass(guestQuery.type,'all')}}" href="javascript:;"  ng-click="setGuestQueryType('all')">All</a>
+	                        <a class="sort {{isActiveClass(guestQuery.type,'Recent')}}" href="javascript:;" ng-click="setGuestQueryType('Recent')">Recent</a>
+	                        <a class="sort {{isActiveClass(guestQuery.type,'Favourite')}}" href="javascript:;" ng-click="setGuestQueryType('Favourite')">Favourite</a>
+	                        <a class="sort {{isActiveClass(guestQuery.type,'Paramanent')}}" href="javascript:;" ng-click="setGuestQueryType('Paramanent')">Permanent</a>                        
+                        <span class=" pull-right">
+							<a href="javascript:;" popups="/app/partials/resident/addguest.html" ng-click="clearGuestForm();"><button class="btn btn-primary btn-guest"><span class="plus-wrppr"><i class="fa fa-plus"></i></span> Add Guest</button></a>
+                         </span>
+                    </header>
+                    <div class="panel-body guest-data" nicescroll data-ng-init="findGuestsEntry()">
+                        <div class="guest-info" ng-repeat="entry in guestentry">
+                        	<div class="row">
+                        		<div class="col-sm-2">
+                        			<div class="status-info">
+                                        <p class="guest-status {{entry.guest_pass_status}}">{{entry.guest_pass_status}}</p>
+                        			     <p class="arrival-time">{{convertTime(entry.guest_pass_status_updated_date)}}</p>
+                                    </div>
+                        		</div>
+                        		<div class="col-sm-5">
+                        			<div class="active-resident">
+			                			<label ng-click="showGuestDetail(entry.id);">
+                                            <a href="javascript:;">{{entry.first_name + " " + entry.last_name}}</a>           
+                                        </label>
+			                			<p class="signed-in">signed in by {{entry.parent_resident.first_name + " " + entry.parent_resident.last_name}}</p>
+			                		</div>
+                        		</div>
+                        		<div class="col-sm-5 btn-col">
+                                    <button class="btn btn-default bld btn-logout" ng-if="entry.guest_pass_status=='active'" ng-click="inactiveGuestPassStatus(entry.id)">Sign Out</button>
+
+                                    <button class="btn btn-default bld" ng-if="entry.guest_pass_status=='inactive'" ng-click="activeGuestPassStatus(entry.id)">Sign In</button>
+
+                                    <button class="btn btn-default bld" ng-if="entry.guest_pass_status=='arrived'" ng-click="activeGuestPassStatus(entry.id)">Sign In</button>
+
+                        			<a class="btn btn-default bld btn-gray" href="#viewGuest" ng-click="viewGuestEntryDetail(entry)" data-toggle="modal" ng-if="entry.guest_pass_status=='inactive'"><i class="fa fa-external-link"></i> View</a>
+
+                                    <a class="btn btn-default bld btn-gray" href="#viewGuest" ng-click="viewGuestEntryDetail(entry)" data-toggle="modal" ng-if="entry.guest_pass_status=='arrived'"><i class="fa fa-external-link"></i> View</a>
+
+                                    <a class="btn btn-default bld btn-gray" href="javascript:;" popups="/app/partials/resident/editguest.html" ng-click="guestEdit(entry)" ng-if="entry.guest_pass_status=='active'"><i class="fa fa-external-link"></i> Edit</a>
+                        		</div>
+                        	</div>
+                        </div>
+                        <div ng-if="guestentry.length==0">
+                            <h1 class="hdng-grey"><center>Sorry! No result found.</center></h1>
+                        </div>
+                    </div>
+                    <div class="page-nav">
+                        <ul class="pagination pagination-sm" ng-if="total_page>0">
+                            <li>
+                                <a href="javascript:;" ng-click="setGuestQueryPage(current_page-1)">«</a>
+                            </li>
+                            <li class="{{isActiveClass(($index+1),current_page)}}" ng-repeat="page in [] | range : total_page">
+                                <a ng-click="setGuestQueryPage($index+1)" class="{'active':($index+1) == current_page}" href="javascript:;">{{$index+1}}</a>
+                            </li>
+                            <li>
+                                <a href="javascript:;" ng-click="setGuestQueryPage(current_page+1)">»</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9" ng-if="isShowGuestDetail">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <header class="panel-heading">
+                        Guest Detail View
+                        
+                        <span class="tools pull-right">
+                            <button class="btn btn-primary" ng-click="hideGuestDetail()"><i class="fa fa-level-up"></i> Back</button>
+                        </span>
+                    </header>
+                    
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                                <div class="col-sm-8">
+                                    <div>
+                                        <span style="display:inline-block; vertical-align: middle; padding: 0 5px;" class="guest-detail-status {{guestDetail.guest_pass_status}}" style="padding:5px;">{{guestDetail.guest_pass_status}}</span>
+                                        <h3 style="display:inline-block; vertical-align: middle; margin-top: 0;">{{guestDetail.first_name+" "+guestDetail.last_name}}</h3>
+                                        <a style="display:inline-block; vertical-align: middle;" href="javascript:;" popups="/app/partials/resident/editguest.html" ng-click="guestEdit(guestDetail)"><i class="fa fa-pencil-square-o edit-1"></i></a>
+                                    </div>
+                                    <p>Phone : {{guestDetail.mobile_phone}}</p>
+                                    <p>Email : {{guestDetail.email_address}}</p>
+                                    <p>Favourite : {{guestDetail.favourite?"Yes":"No"}}</p>
+                                    <p>Permanent : {{guestDetail.permanent_pass?"Yes":"No"}}</p>
+                                    <p>Last Updated : {{getDateAndTime(guestDetail.guest_pass_status_updated_date)}}</p>
+                                </div>
+                                <div class="col-sm-3"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-11">
+                                <h2>History</h2>
+                                <div class="recent-activity" ng-repeat="history in guestDetail.history">
+
+                                    <div ng-if="history.type=='resident'">
+                                        <p> {{getTimeFromDate(history.updatedAt)}} 
+                                              <a href="javascript:;">
+                                                {{history.parent_resident.first_name+" "+history.parent_resident.last_name}}
+                                            </a>
+                                            {{history.status}} guest 
+                                          
+                                            <a href="javascript:;">{{guestDetail.first_name+" "+guestDetail.last_name}}.</a>
+                                        </p>
+                                    </div>
+
+                                    <div ng-if="history.type=='guard'">
+                                        <p ng-if="history.status=='arrived'"> {{getTimeFromDate(history.updatedAt)}} 
+                                              <a href="javascript:;">
+                                                {{history.parent_resident.first_name+" "+history.parent_resident.last_name}}'s
+                                            </a>
+                                             guest 
+                                          
+                                            <a href="javascript:;">{{guestDetail.first_name+" "+guestDetail.last_name}}</a> arrived at the gate.
+                                        </p>
+
+                                        <p ng-if="history.status!='arrived'"> {{getTimeFromDate(history.updatedAt)}} 
+
+                                            <a href="javascript:;">{{history.parent_guard.first_name+" "+history.parent_guard.last_name}}</a>
+                                            (Guard) {{history.status}} guest 
+                                              <a href="javascript:;">
+                                                {{guestDetail.first_name+" "+guestDetail.last_name}} .
+                                            </a>
+                                            
+                                          
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<div class="col-md-12">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <header class="panel-heading">
+                        Recent History
+                    </header>
+                    <div class="panel-body" data-ng-init="findHistory()">
+                        <div class="row" ng-repeat="history in guestHistory track by $index">
+                            <div class="col-sm-10">
+                                <div ng-if="history.type=='resident'">
+                                    <p> {{getTimeFromDate(history.updatedAt)}} 
+                                          <a href="javascript:;">
+                                            {{history.parent_resident.first_name+" "+history.parent_resident.last_name}}
+                                        </a>
+                                        {{history.status}} guest 
+                                      
+                                        <a href="javascript:;">{{history.parent_guest.first_name+" "+history.parent_guest.last_name}}.</a>
+                                    </p>
+                                </div>
+                                <div ng-if="history.type=='guard'">
+                                    <p ng-if="history.status=='arrived'"> {{getTimeFromDate(history.updatedAt)}} 
+                                          <a href="javascript:;">
+                                            {{history.parent_resident.first_name+" "+history.parent_resident.last_name}}'s
+                                        </a>
+                                         guest
+                                      
+                                        <a href="javascript:;">{{history.parent_guest.first_name+" "+history.parent_guest.last_name}}</a> arrived at the gate.
+                                    </p>
+                                    <p ng-if="history.status!='arrived'"> {{getTimeFromDate(history.updatedAt)}} 
+
+                                        <a href="javascript:;">{{history.parent_guard.first_name+" "+history.parent_guard.last_name}}</a>
+                                        (Guard) {{history.status}} guest 
+                                          <a href="javascript:;">
+                                            {{history.parent_guest.first_name+" "+history.parent_guest.last_name}}.
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div>
+                            <a href="javascript:;" ng-click="guestHistoryOptions.page=guestHistoryOptions.page+1;findHistory()">
+                                <button class="btn btn-primary btn-guest">
+                                    <span class="plus-wrppr"><i class="fa fa-plus"></i></span> More
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

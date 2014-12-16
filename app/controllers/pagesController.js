@@ -4,7 +4,7 @@ var locomotive = require('locomotive')
 var pagesController = new Controller();
 
 pagesController.main = function() {
-  this.title = 'Locomotive';
+  this.title = 'NewsDucks';
   this.render();
 }
 

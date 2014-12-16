@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-lg-12">
+		<section class="panel">
+		    <header class="panel-heading">
+		     Country
+		    </header>
+		    <div class="panel-body">
+			    <form class="form-horizontal adminex-form" role="form" ng-submit="createCountry()">
+			            <div class="form-group">
+			                <div class="col-sm-11">
+							<input class="form-control" type="text" placeholder="Enter Country" data-ng-model="country">
+							</div>
+							 <button type="submit" class="btn btn-primary">Add</button>
+			            </div>
+			    </form>
+           </div>
+           {{message}}
+		</section>
+   </div>
+</div>
+
+        <header class="panel-heading" data-ng-init="findCountry()">
+            {{deletemessage}}
+        </header>
+        <div class="panel-body">
+        <div class="adv-table">
+        <table  class="display table table-bordered table-striped" id="dynamic-table">
+        <thead>
+        <tr>
+            <th>Country</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+            
+        <tr class="gradeU" ng-repeat="country in countryList.country">
+            <td>{{country ? country.country : 'No data found'}}</td>
+            <td><a href="" ng-click="editCountry()">Edit</a>&nbsp;&nbsp;<span><a href="" ng-click="deleteCountry(country,$index)">Delete</a></span></td>	
+        </tr>
+        </tbody>
+        </table>
+        </div>
+        </div>
+        </section>
+        </div>
+        </div>
+        </header>

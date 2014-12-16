@@ -7,6 +7,12 @@
 // information.
 module.exports = function routes() {
   this.root('pages#main');
-  this.post('/admin/login','admin#login');
-  this.post('/admin/create','admin#create');
+  this.post('/login','auth#login');
+  this.get('/home','auth#home');
+  this.post('/createCountry','data#createCountry');
+  this.post('/findCountry','data#findCountry');
+  this.post('/deleteCountry','data#deleteCountry');
+  this.post('/createCity','data#createCity');
+  this.post('/findCity','data#findCity');
+  this.post('/deleteCity','data#deleteCity');
 }

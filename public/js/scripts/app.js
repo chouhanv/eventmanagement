@@ -74,6 +74,7 @@
            };
            $scope.deleteCountry = function(country,index)
 		   {
+		   	 if (confirm("Are you sure you want to delete city also")){
 		     $scope.id = country._id;
 		     $scope.status = country.status;
 		     $scope.index = index;
@@ -92,6 +93,7 @@
 		     	console.log(error);
 		     	$scope.deletemessage = "Check server Status";
 		     })
+		 }
 		 };
 		  $scope.deleteCategory = function(category,index)
 		   {

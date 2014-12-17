@@ -48,7 +48,14 @@ dataController.deleteCountry = function(req,res)
         th.res.json({message : "Db Error",status : false});
       }
       else{
-        th.res.json({message : "country successfully deleted",country : results,status : true});
+        City.remove({countryid : id},function(err,results){
+          if (err){
+                th.res.json({message : "Db Error",status : false});
+          }
+          else{
+            th.res.json({message : "country successfully deleted",country : results,status : true});
+          }
+        })
       }
   })
 }

@@ -51,6 +51,27 @@
 					$scope.message = "Check server status"
 				})
            };
+           $scope.createCategory = function()
+	      {
+		   	console.log("call create createCategory");
+				$http.post('/createCategory',{category : $scope.category})
+				.success(function(data){
+					if (data.status)
+						{
+						$scope.message = data.message;
+						$rootScope.categoryList.category.push(data.category);
+						$scope.category = "";
+						}
+						else
+						{
+						  $scope.message = "Db error";
+						}
+				})
+				.error(function(error){
+					console.log(error);
+					$scope.message = "Check server status"
+				})
+           };
            $scope.deleteCountry = function(country,index)
 		   {
 		     $scope.id = country._id;
@@ -61,6 +82,25 @@
 		     	if(data.status){
 		     		$scope.deletemessage = data.message;
 		     		$rootScope.findCountry();
+		     	}
+		     	else
+		     	{
+		     		$scope.deletemessage = "Db Error";
+		     	}
+		     	})
+		     .error(function(error){
+		     	console.log(error);
+		     	$scope.deletemessage = "Check server Status";
+		     })
+		 };
+		  $scope.deleteCategory = function(category,index)
+		   {
+		     $scope.id = category._id;
+		     $http.post('/deleteCategory',{id : $scope.id})
+		     .success(function(data){
+		     	if(data.status){
+		     		$scope.deletemessage = data.message;
+		     		$rootScope.findcategory();
 		     	}
 		     	else
 		     	{
@@ -119,20 +159,132 @@
 		     })
 	};
    //city croud operation stop hear
+$scope.search=function(){return $scope.filteredStores=$filter("filter")($scope.stores,$scope.searchKeywords),$scope.onFilterChange()},$scope.order=function(rowName){return $scope.row!==rowName?($scope.row=rowName,$scope.filteredStores=$filter("orderBy")($scope.stores,rowName),$scope.onOrderChange()):void 0},$scope.numPerPageOpt=[3,5,10,20],$scope.numPerPage=$scope.numPerPageOpt[2],$scope.currentPage=1,$scope.currentPageStores=[],(init=function(){return $scope.search(),$scope.select($scope.currentPage)})()}])}.call(this),function(){"use strict";angular.module("app.task",[]).factory("taskStorage",function(){var DEMO_TASKS,STORAGE_ID;return STORAGE_ID="tasks",DEMO_TASKS='[ {"title": "Finish homework", "completed": true}, {"title": "Make a call", "completed": true}, {"title": "Build a snowman!", "completed": false}, {"title": "Tango! Tango! Tango!", "completed": false}, {"title": "Play games with friends", "completed": false}, {"title": "Shopping", "completed": false}, {"title": "One more dance", "completed": false}, {"title": "Try Google glass", "completed": false} ]',{get:function(){return JSON.parse(localStorage.getItem(STORAGE_ID)||DEMO_TASKS)},put:function(tasks){return localStorage.setItem(STORAGE_ID,JSON.stringify(tasks))}}}).directive("taskFocus",["$timeout",function($timeout){return{link:function(scope,ele,attrs){return scope.$watch(attrs.taskFocus,function(newVal){return newVal?$timeout(function(){return ele[0].focus()},0,!1):void 0})}}}]).controller("taskCtrl",["$scope","taskStorage","filterFilter","$rootScope","logger",function($scope,taskStorage,filterFilter,$rootScope,logger){var tasks;return tasks=$scope.tasks=taskStorage.get(),$scope.newTask="",$scope.remainingCount=filterFilter(tasks,{completed:!1}).length,$scope.editedTask=null,$scope.statusFilter={completed:!1},$scope.filter=function(filter){switch(filter){case"all":return $scope.statusFilter="";case"active":return $scope.statusFilter={completed:!1};case"completed":return $scope.statusFilter={completed:!0}}},$scope.add=function(){var newTask;return newTask=$scope.newTask.trim(),0!==newTask.length?(tasks.push({title:newTask,completed:!1}),logger.logSuccess('New task: "'+newTask+'" added'),taskStorage.put(tasks),$scope.newTask="",$scope.remainingCount++):void 0},$scope.edit=function(task){return $scope.editedTask=task},$scope.doneEditing=function(task){return $scope.editedTask=null,task.title=task.title.trim(),task.title?logger.log("Task updated"):$scope.remove(task),taskStorage.put(tasks)},$scope.remove=function(task){var index;return $scope.remainingCount-=task.completed?0:1,index=$scope.tasks.indexOf(task),$scope.tasks.splice(index,1),taskStorage.put(tasks),logger.logError("Task removed")},$scope.completed=function(task){return $scope.remainingCount+=task.completed?-1:1,taskStorage.put(tasks),task.completed?$scope.remainingCount>0?logger.log(1===$scope.remainingCount?"Almost there! Only "+$scope.remainingCount+" task left":"Good job! Only "+$scope.remainingCount+" tasks left"):logger.logSuccess("Congrats! All done :)"):void 0},$scope.clearCompleted=function(){return $scope.tasks=tasks=tasks.filter(function(val){return!val.completed}),taskStorage.put(tasks)},$scope.markAll=function(completed){return tasks.forEach(function(task){return task.completed=completed}),$scope.remainingCount=completed?0:tasks.length,taskStorage.put(tasks),completed?logger.logSuccess("Congrats! All done :)"):void 0},$scope.$watch("remainingCount == 0",function(val){return $scope.allChecked=val}),$scope.$watch("remainingCount",function(newVal){return $rootScope.$broadcast("taskRemaining:changed",newVal)})}])}.call(this),function(){"use strict";angular.module("app.ui.ctrls",[]).controller("NotifyCtrl",["$scope","logger",function($scope,logger){return $scope.notify=function(type){switch(type){case"info":return logger.log("Heads up! This alert needs your attention, but it's not super important.");case"success":return logger.logSuccess("Well done! You successfully read this important alert message.");case"warning":return logger.logWarning("Warning! Best check yo self, you're not looking too good.");case"error":return logger.logError("Oh snap! Change a few things up and try submitting again.")}}}]).controller("AlertDemoCtrl",["$scope",function($scope){return $scope.alerts=[{type:"success",msg:"Well done! You successfully read this important alert message."},{type:"info",msg:"Heads up! This alert needs your attention, but it is not super important."},{type:"warning",msg:"Warning! Best check yo self, you're not looking too good."},{type:"danger",msg:"Oh snap! Change a few things up and try submitting again."}],$scope.addAlert=function(){var num,type;switch(num=Math.ceil(4*Math.random()),type=void 0,num){case 0:type="info";break;case 1:type="success";break;case 2:type="info";break;case 3:type="warning";break;case 4:type="danger"}return $scope.alerts.push({type:type,msg:"Another alert!"})},$scope.closeAlert=function(index){return $scope.alerts.splice(index,1)}}]).controller("ProgressDemoCtrl",["$scope",function($scope){return $scope.max=200,$scope.random=function(){var type,value;value=Math.floor(100*Math.random()+10),type=void 0,type=25>value?"success":50>value?"info":75>value?"warning":"danger",$scope.showWarning="danger"===type||"warning"===type,$scope.dynamic=value,$scope.type=type},$scope.random()}]).controller("AccordionDemoCtrl",["$scope",function($scope){$scope.oneAtATime=!0,$scope.groups=[{title:"Dynamic Group Header - 1",content:"Dynamic Group Body - 1"},{title:"Dynamic Group Header - 2",content:"Dynamic Group Body - 2"},{title:"Dynamic Group Header - 3",content:"Dynamic Group Body - 3"}],$scope.items=["Item 1","Item 2","Item 3"],$scope.status={isFirstOpen:!0,isFirstOpen1:!0,isFirstOpen2:!0,isFirstOpen3:!0,isFirstOpen4:!0,isFirstOpen5:!0,isFirstOpen6:!0},$scope.addItem=function(){var newItemNo;newItemNo=$scope.items.length+1,$scope.items.push("Item "+newItemNo)}}]).controller("CollapseDemoCtrl",["$scope",function($scope){return $scope.isCollapsed=!1}])
+.controller("ModalDemoCtrl",["$scope","$modal","$log","$rootScope",
+	function($scope,$modal,$log,$rootScope)
+	{
+		$scope.items=["item1","item2","item3"];
+		$scope.open=function(result,data) {
+			 if (data == 'country')
+			 	{
+			 		$rootScope.editcountryname  = result.country;
+			        $rootScope.editcountryid  = result._id;
+			 	}
+			 	else if(data =='city')
+			 	{
+			 		 $rootScope.editcitycountry = result.countryid.country;
+			 		 $rootScope.editcitycountryid = result.countryid._id;
+			         $rootScope.editcityname = result.city;
+			         $rootScope.editcityid   = result._id;
+			         console.log('country', $rootScope.editcitycountryid);
+			         console.log('city', $rootScope.editcityid);
 
-
-
-
-
-
-$scope.search=function(){return $scope.filteredStores=$filter("filter")($scope.stores,$scope.searchKeywords),$scope.onFilterChange()},$scope.order=function(rowName){return $scope.row!==rowName?($scope.row=rowName,$scope.filteredStores=$filter("orderBy")($scope.stores,rowName),$scope.onOrderChange()):void 0},$scope.numPerPageOpt=[3,5,10,20],$scope.numPerPage=$scope.numPerPageOpt[2],$scope.currentPage=1,$scope.currentPageStores=[],(init=function(){return $scope.search(),$scope.select($scope.currentPage)})()}])}.call(this),function(){"use strict";angular.module("app.task",[]).factory("taskStorage",function(){var DEMO_TASKS,STORAGE_ID;return STORAGE_ID="tasks",DEMO_TASKS='[ {"title": "Finish homework", "completed": true}, {"title": "Make a call", "completed": true}, {"title": "Build a snowman!", "completed": false}, {"title": "Tango! Tango! Tango!", "completed": false}, {"title": "Play games with friends", "completed": false}, {"title": "Shopping", "completed": false}, {"title": "One more dance", "completed": false}, {"title": "Try Google glass", "completed": false} ]',{get:function(){return JSON.parse(localStorage.getItem(STORAGE_ID)||DEMO_TASKS)},put:function(tasks){return localStorage.setItem(STORAGE_ID,JSON.stringify(tasks))}}}).directive("taskFocus",["$timeout",function($timeout){return{link:function(scope,ele,attrs){return scope.$watch(attrs.taskFocus,function(newVal){return newVal?$timeout(function(){return ele[0].focus()},0,!1):void 0})}}}]).controller("taskCtrl",["$scope","taskStorage","filterFilter","$rootScope","logger",function($scope,taskStorage,filterFilter,$rootScope,logger){var tasks;return tasks=$scope.tasks=taskStorage.get(),$scope.newTask="",$scope.remainingCount=filterFilter(tasks,{completed:!1}).length,$scope.editedTask=null,$scope.statusFilter={completed:!1},$scope.filter=function(filter){switch(filter){case"all":return $scope.statusFilter="";case"active":return $scope.statusFilter={completed:!1};case"completed":return $scope.statusFilter={completed:!0}}},$scope.add=function(){var newTask;return newTask=$scope.newTask.trim(),0!==newTask.length?(tasks.push({title:newTask,completed:!1}),logger.logSuccess('New task: "'+newTask+'" added'),taskStorage.put(tasks),$scope.newTask="",$scope.remainingCount++):void 0},$scope.edit=function(task){return $scope.editedTask=task},$scope.doneEditing=function(task){return $scope.editedTask=null,task.title=task.title.trim(),task.title?logger.log("Task updated"):$scope.remove(task),taskStorage.put(tasks)},$scope.remove=function(task){var index;return $scope.remainingCount-=task.completed?0:1,index=$scope.tasks.indexOf(task),$scope.tasks.splice(index,1),taskStorage.put(tasks),logger.logError("Task removed")},$scope.completed=function(task){return $scope.remainingCount+=task.completed?-1:1,taskStorage.put(tasks),task.completed?$scope.remainingCount>0?logger.log(1===$scope.remainingCount?"Almost there! Only "+$scope.remainingCount+" task left":"Good job! Only "+$scope.remainingCount+" tasks left"):logger.logSuccess("Congrats! All done :)"):void 0},$scope.clearCompleted=function(){return $scope.tasks=tasks=tasks.filter(function(val){return!val.completed}),taskStorage.put(tasks)},$scope.markAll=function(completed){return tasks.forEach(function(task){return task.completed=completed}),$scope.remainingCount=completed?0:tasks.length,taskStorage.put(tasks),completed?logger.logSuccess("Congrats! All done :)"):void 0},$scope.$watch("remainingCount == 0",function(val){return $scope.allChecked=val}),$scope.$watch("remainingCount",function(newVal){return $rootScope.$broadcast("taskRemaining:changed",newVal)})}])}.call(this),function(){"use strict";angular.module("app.ui.ctrls",[]).controller("NotifyCtrl",["$scope","logger",function($scope,logger){return $scope.notify=function(type){switch(type){case"info":return logger.log("Heads up! This alert needs your attention, but it's not super important.");case"success":return logger.logSuccess("Well done! You successfully read this important alert message.");case"warning":return logger.logWarning("Warning! Best check yo self, you're not looking too good.");case"error":return logger.logError("Oh snap! Change a few things up and try submitting again.")}}}]).controller("AlertDemoCtrl",["$scope",function($scope){return $scope.alerts=[{type:"success",msg:"Well done! You successfully read this important alert message."},{type:"info",msg:"Heads up! This alert needs your attention, but it is not super important."},{type:"warning",msg:"Warning! Best check yo self, you're not looking too good."},{type:"danger",msg:"Oh snap! Change a few things up and try submitting again."}],$scope.addAlert=function(){var num,type;switch(num=Math.ceil(4*Math.random()),type=void 0,num){case 0:type="info";break;case 1:type="success";break;case 2:type="info";break;case 3:type="warning";break;case 4:type="danger"}return $scope.alerts.push({type:type,msg:"Another alert!"})},$scope.closeAlert=function(index){return $scope.alerts.splice(index,1)}}]).controller("ProgressDemoCtrl",["$scope",function($scope){return $scope.max=200,$scope.random=function(){var type,value;value=Math.floor(100*Math.random()+10),type=void 0,type=25>value?"success":50>value?"info":75>value?"warning":"danger",$scope.showWarning="danger"===type||"warning"===type,$scope.dynamic=value,$scope.type=type},$scope.random()}]).controller("AccordionDemoCtrl",["$scope",function($scope){$scope.oneAtATime=!0,$scope.groups=[{title:"Dynamic Group Header - 1",content:"Dynamic Group Body - 1"},{title:"Dynamic Group Header - 2",content:"Dynamic Group Body - 2"},{title:"Dynamic Group Header - 3",content:"Dynamic Group Body - 3"}],$scope.items=["Item 1","Item 2","Item 3"],$scope.status={isFirstOpen:!0,isFirstOpen1:!0,isFirstOpen2:!0,isFirstOpen3:!0,isFirstOpen4:!0,isFirstOpen5:!0,isFirstOpen6:!0},$scope.addItem=function(){var newItemNo;newItemNo=$scope.items.length+1,$scope.items.push("Item "+newItemNo)}}]).controller("CollapseDemoCtrl",["$scope",function($scope){return $scope.isCollapsed=!1}]).controller("ModalDemoCtrl",["$scope","$modal","$log",function($scope,$modal,$log){$scope.items=["item1","item2","item3"],$scope.open=function(){var modalInstance;modalInstance=$modal.open({templateUrl:"myModalContent.html",controller:"ModalInstanceCtrl",resolve:{items:function(){return $scope.items}}}),modalInstance.result.then(function(selectedItem){$scope.selected=selectedItem},function(){$log.info("Modal dismissed at: "+new Date)})}}]).controller("ModalInstanceCtrl",["$scope","$modalInstance","items",function($scope,$modalInstance,items){$scope.items=items,$scope.selected={item:$scope.items[0]},$scope.ok=function(){$modalInstance.close($scope.selected.item)},$scope.cancel=function(){$modalInstance.dismiss("cancel")}}]).controller("PaginationDemoCtrl",["$scope",function($scope){return $scope.totalItems=64,$scope.currentPage=4,$scope.maxSize=5,$scope.setPage=function(pageNo){return $scope.currentPage=pageNo},$scope.bigTotalItems=175,$scope.bigCurrentPage=1}]).controller("TabsDemoCtrl",["$scope",function($scope){return $scope.tabs=[{title:"Dynamic Title 1",content:"Dynamic content 1.  Consectetur adipisicing elit. Nihil, quidem, officiis, et ex laudantium sed cupiditate voluptatum libero nobis sit illum voluptates beatae ab. Ad, repellendus non sequi et at."},{title:"Disabled",content:"Dynamic content 2.  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, quidem, officiis, et ex laudantium sed cupiditate voluptatum libero nobis sit illum voluptates beatae ab. Ad, repellendus non sequi et at.",disabled:!0}],$scope.navType="pills"}]).controller("TreeDemoCtrl",["$scope",function($scope){return $scope.list=[{id:1,title:"Item 1",items:[]},{id:2,title:"Item 2",items:[{id:21,title:"Item 2.1",items:[{id:211,title:"Item 2.1.1",items:[]},{id:212,title:"Item 2.1.2",items:[]}]},{id:22,title:"Item 2.2",items:[{id:221,title:"Item 2.2.1",items:[]},{id:222,title:"Item 2.2.2",items:[]}]}]},{id:3,title:"Item 3",items:[]},{id:4,title:"Item 4",items:[{id:41,title:"Item 4.1",items:[]}]},{id:5,title:"Item 5",items:[]},{id:6,title:"Item 6",items:[]},{id:7,title:"Item 7",items:[]}],$scope.selectedItem={},$scope.options={},$scope.remove=function(scope){scope.remove()},$scope.toggle=function(scope){scope.toggle()},$scope.newSubItem=function(scope){var nodeData;nodeData=scope.$modelValue,nodeData.items.push({id:10*nodeData.id+nodeData.items.length,title:nodeData.title+"."+(nodeData.items.length+1),items:[]})}}]).controller("MapDemoCtrl",["$scope","$http","$interval",function($scope,$http,$interval){var i,markers;for(markers=[],i=0;8>i;)markers[i]=new google.maps.Marker({title:"Marker: "+i}),i++;$scope.GenerateMapMarkers=function(){var d,lat,lng,loc,numMarkers;for(d=new Date,$scope.date=d.toLocaleString(),numMarkers=Math.floor(4*Math.random())+4,i=0;numMarkers>i;)lat=43.66+Math.random()/100,lng=-79.4103+Math.random()/100,loc=new google.maps.LatLng(lat,lng),markers[i].setPosition(loc),markers[i].setMap($scope.map),i++},$interval($scope.GenerateMapMarkers,2e3)}])}.call(this),function(){"use strict";angular.module("app.ui.directives",[]).directive("uiTime",[function(){return{restrict:"A",link:function(scope,ele){var checkTime,startTime;return startTime=function(){var h,m,s,t,time,today;return today=new Date,h=today.getHours(),m=today.getMinutes(),s=today.getSeconds(),m=checkTime(m),s=checkTime(s),time=h+":"+m+":"+s,ele.html(time),t=setTimeout(startTime,500)},checkTime=function(i){return 10>i&&(i="0"+i),i},startTime()}}}]).directive("uiWeather",[function(){return{restrict:"A",link:function(scope,ele,attrs){var color,icon,skycons;return color=attrs.color,icon=Skycons[attrs.icon],skycons=new Skycons({color:color,resizeClear:!0}),skycons.add(ele[0],icon),skycons.play()
+			 	}
+			 	else{
+			 		$rootScope.editcategoryname  = result.category;
+			        $rootScope.editcategoryid  = result._id;
+			        console.log($rootScope.editcategoryname);
+			        console.log($rootScope.editcategoryid);
+			 	}
+			console.log(result);
+			var modalInstance;
+			modalInstance=$modal.open({templateUrl:"myModalContent.html",controller:"ModalInstanceCtrl",
+			resolve:{items:function(){
+				return $scope.items
+			}
+		}
+	}),modalInstance.result.then(function(selectedItem)
+	{$scope.selected=selectedItem},
+	function(){
+		$log.info("Modal dismissed at: "+new Date)
+	}
+	)}
+}])
+.controller("ModalInstanceCtrl",["$scope","$modalInstance","items","$rootScope","$http",
+	function($scope,$modalInstance,items,$rootScope,$http)
+	{
+		$scope.items=items,
+		$scope.selected={item:$scope.items[0]},
+		 $scope.editCountry = function()
+		 {
+           console.log($scope.editcountryname);
+           console.log($scope.editcountryid);
+           $http.post('/editCountry',{country : $scope.editcountryname,id : $scope.editcountryid})
+           .success(function(data){
+           	if(data.status){
+               $rootScope.editmessage = data.message;
+               $rootScope.findCountry();
+           	}
+           	else
+           	{
+           		 $rootScope.editmessage = "Db Error";
+           	}
+           })
+           .error(function(error){
+           	console.log(error);
+           	$rootScope.editmessage = "Check Server Status";
+           })
+           $modalInstance.close();
+		 },
+		 $scope.editCategory = function()
+		 {
+           console.log($scope.editcategoryname);
+           console.log($scope.editcategoryid);
+           $http.post('/editCategory',{category : $scope.editcategoryname,id : $scope.editcategoryid})
+           .success(function(data){
+           	if(data.status){
+               $rootScope.editmessage = data.message;
+               $rootScope.findcategory();
+           	}
+           	else
+           	{
+           		 $rootScope.editmessage = "Db Error";
+           	}
+           })
+           .error(function(error){
+           	console.log(error);
+           	$rootScope.editmessage = "Check Server Status";
+           })
+           $modalInstance.close();
+		 },
+		 $scope.editCity = function()
+		 {
+           console.log('country', $rootScope.editcitycountryid);
+		   console.log('city', $rootScope.editcityid);
+		    $http.post('/editCity',{city : $scope.editcityname,id : $scope.editcityid,countryid : $scope.editcitycountryid})
+           .success(function(data){
+           	if(data.status){
+               $rootScope.editmessage = data.message;
+               $rootScope.findCity();
+           	}
+           	else
+           	{
+           		 $rootScope.editmessage = "Db Error";
+           	}
+           })
+           .error(function(error){
+           	console.log(error);
+           	$rootScope.editmessage = "Check Server Status";
+           })
+           $modalInstance.close(); 
+		 },
+		$scope.ok=function()
+		{
+			$modalInstance.close($scope.selected.item)
+		},
+		$scope.cancel=function()
+		{
+			$modalInstance.dismiss("cancel")
+		}
+	}])
+.controller("PaginationDemoCtrl",["$scope",function($scope){return $scope.totalItems=64,$scope.currentPage=4,$scope.maxSize=5,$scope.setPage=function(pageNo){return $scope.currentPage=pageNo},$scope.bigTotalItems=175,$scope.bigCurrentPage=1}]).controller("TabsDemoCtrl",["$scope",function($scope){return $scope.tabs=[{title:"Dynamic Title 1",content:"Dynamic content 1.  Consectetur adipisicing elit. Nihil, quidem, officiis, et ex laudantium sed cupiditate voluptatum libero nobis sit illum voluptates beatae ab. Ad, repellendus non sequi et at."},{title:"Disabled",content:"Dynamic content 2.  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, quidem, officiis, et ex laudantium sed cupiditate voluptatum libero nobis sit illum voluptates beatae ab. Ad, repellendus non sequi et at.",disabled:!0}],$scope.navType="pills"}]).controller("TreeDemoCtrl",["$scope",function($scope){return $scope.list=[{id:1,title:"Item 1",items:[]},{id:2,title:"Item 2",items:[{id:21,title:"Item 2.1",items:[{id:211,title:"Item 2.1.1",items:[]},{id:212,title:"Item 2.1.2",items:[]}]},{id:22,title:"Item 2.2",items:[{id:221,title:"Item 2.2.1",items:[]},{id:222,title:"Item 2.2.2",items:[]}]}]},{id:3,title:"Item 3",items:[]},{id:4,title:"Item 4",items:[{id:41,title:"Item 4.1",items:[]}]},{id:5,title:"Item 5",items:[]},{id:6,title:"Item 6",items:[]},{id:7,title:"Item 7",items:[]}],$scope.selectedItem={},$scope.options={},$scope.remove=function(scope){scope.remove()},$scope.toggle=function(scope){scope.toggle()},$scope.newSubItem=function(scope){var nodeData;nodeData=scope.$modelValue,nodeData.items.push({id:10*nodeData.id+nodeData.items.length,title:nodeData.title+"."+(nodeData.items.length+1),items:[]})}}]).controller("MapDemoCtrl",["$scope","$http","$interval",function($scope,$http,$interval){var i,markers;for(markers=[],i=0;8>i;)markers[i]=new google.maps.Marker({title:"Marker: "+i}),i++;$scope.GenerateMapMarkers=function(){var d,lat,lng,loc,numMarkers;for(d=new Date,$scope.date=d.toLocaleString(),numMarkers=Math.floor(4*Math.random())+4,i=0;numMarkers>i;)lat=43.66+Math.random()/100,lng=-79.4103+Math.random()/100,loc=new google.maps.LatLng(lat,lng),markers[i].setPosition(loc),markers[i].setMap($scope.map),i++},$interval($scope.GenerateMapMarkers,2e3)}])}.call(this),function(){"use strict";angular.module("app.ui.directives",[]).directive("uiTime",[function(){return{restrict:"A",link:function(scope,ele){var checkTime,startTime;return startTime=function(){var h,m,s,t,time,today;return today=new Date,h=today.getHours(),m=today.getMinutes(),s=today.getSeconds(),m=checkTime(m),s=checkTime(s),time=h+":"+m+":"+s,ele.html(time),t=setTimeout(startTime,500)},checkTime=function(i){return 10>i&&(i="0"+i),i},startTime()}}}]).directive("uiWeather",[function(){return{restrict:"A",link:function(scope,ele,attrs){var color,icon,skycons;return color=attrs.color,icon=Skycons[attrs.icon],skycons=new Skycons({color:color,resizeClear:!0}),skycons.add(ele[0],icon),skycons.play()
 }}}])}.call(this),function(){"use strict";angular.module("app.ui.services",[]).factory("logger",[function(){var logIt;return toastr.options={closeButton:!0,positionClass:"toast-bottom-right",timeOut:"3000"},logIt=function(message,type){return toastr[type](message)},{log:function(message){logIt(message,"info")},logWarning:function(message){logIt(message,"warning")},logSuccess:function(message){logIt(message,"success")},logError:function(message){logIt(message,"error")}}}])}.call(this),function(){"use strict";angular.module("app",["ngRoute","ngAnimate","ui.bootstrap","easypiechart","mgo-angular-wizard","textAngular","ui.tree","ngMap","ngTagsInput","app.ui.ctrls","app.ui.directives","app.ui.services","app.controllers","app.directives","app.form.validation","app.ui.form.ctrls","app.ui.form.directives","app.tables","app.map","app.task","app.localization","app.chart.ctrls","app.chart.directives","app.page.ctrls"]).config(["$routeProvider",function($routeProvider){return $routeProvider
 	.when("/",{redirectTo:"/dashboard"})
 	.when("/dashboard",{templateUrl:"views/dashboard.html"})
 	.when("/country",{templateUrl:"views/ui/country.html"})
 	.when("/city",{templateUrl:"views/ui/city.html"})
-	.when("/ui/icons",{templateUrl:"views/ui/icons.html"})
-	.when("/ui/grids",{templateUrl:"views/ui/grids.html"})
+	.when("/category",{templateUrl:"views/ui/category.html"})
+	.when("/event",{templateUrl:"views/ui/grids.html"})
 	.when("/ui/widgets",{templateUrl:"views/ui/widgets.html"})
 	.when("/ui/components",{templateUrl:"views/ui/components.html"})
 	.when("/ui/timeline",{templateUrl:"views/ui/timeline.html"})
@@ -197,6 +349,24 @@ $scope.search=function(){return $scope.filteredStores=$filter("filter")($scope.s
 				if (data.status){
 					$rootScope.countryList = {country : data.country};
 					console.log($scope.countryList);
+				}
+				else{
+					$rootScope.findmessage = "Db error";
+				}
+			})
+			.error(function(error){
+				console.log(error);
+				$rootScope.findmessage = "Check Server Status";
+			})
+	    }
+	    $rootScope.findcategory = function()
+	    {
+	    	$rootScope.categoryList ={};
+			$http.post('/findcategory')
+			.success(function(data){
+				if (data.status){
+					$rootScope.categoryList = {category : data.category};
+					console.log('categoryList',$scope.categoryList);
 				}
 				else{
 					$rootScope.findmessage = "Db error";

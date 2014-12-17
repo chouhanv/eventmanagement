@@ -4,19 +4,19 @@
       <div class="col-lg-12">
             <section class="panel">
                 <header class="panel-heading">
-                 Country
+                 Category
                 </header>
                 <div class="panel-body">
-                    <form class="form-horizontal adminex-form" role="form" ng-submit="createCountry()">
+                    <form class="form-horizontal adminex-form" role="form" ng-submit="createCategory()">
                             <div class="form-group">
                                 <div class="col-sm-11">
-                                <input class="form-control" type="text" placeholder="Enter Country" data-ng-model="country">
+                                <input class="form-control" type="text" placeholder="Enter Category" data-ng-model="category">
                                 </div>
                                  <button type="submit" class="btn btn-primary">Add</button>
                             </div>
                     </form>
                </div>
-               {{message}}
+               {{message}} 
             </section>
        </div>
     </div>
@@ -30,14 +30,14 @@
             <table  class="display table table-bordered table-striped" id="dynamic-table">
                 <thead>
                     <tr>
-                        <th>Country</th>
+                        <th>Category</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="gradeU" ng-repeat="country in countryList.country">
-                    <td>{{country ? country.country : 'No data found'}}</td>
-                    <td><a href="" ng-click="open(country,'country')">Edit</a>&nbsp;&nbsp;<span><a href="" ng-click="deleteCountry(country,$index)">Delete</a></span></td>    
+                    <tr class="gradeU" ng-repeat="category in categoryList.category">
+                    <td>{{category ? category.category : 'No data found'}}</td>
+                    <td><a href="" ng-click="open(category,'category')">Edit</a>&nbsp;&nbsp;<span><a href="" ng-click="deleteCategory(category,$index)">Delete</a></span></td>    
                     </tr>
                 </tbody>
             </table>
@@ -51,12 +51,12 @@
                 <div class="col-lg-12">
                     <section class="panel">
                         <div class="panel-body">
-                            <form class="form-horizontal adminex-form" role="form" ng-submit="editCountry()">
+                            <form class="form-horizontal adminex-form" role="form" ng-submit="editCategory()">
                                 <div class="form-group">
                                     <div class="col-sm-11">
-                                        <input class="form-control" type="text" placeholder="Enter Country" data-ng-model="editcountryname">
+                                        <input class="form-control" type="text" placeholder="Enter Category" data-ng-model="editcategoryname">
 
-                                            <input class="form-control" type="hidden" placeholder="Enter Country" data-ng-model="editcountryid">
+                                            <input class="form-control" type="hidden" data-ng-model="editcategoryid">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Update</button>
                                </div>

@@ -1,51 +1,77 @@
 <div data-ng-controller="tableCtrl">
-<div class="row">
-  <div class="col-lg-12">
-        <section class="panel">
-            <header class="panel-heading">
-             City
-            </header>
-            <div class="panel-body" data-ng-init="findCountry()">
-                <form class="form-horizontal adminex-form" role="form" ng-submit="createCity()">
-                        <div class="form-group">
-                             <select class="form-control m-bot15" data-ng-model="country">
-                                <option>Select_Country</option>
-                                <option value="{{country}}" ng-repeat="country in countryList.country">{{country.country}}</option>
-                            </select>
-                            <input class="form-control" type="text" placeholder="Enter City" data-ng-model="city">
-                             <button type="submit" class="btn btn-primary">Add</button>
-                        </div>
-                </form>
-           </div>
-           {{message}}
-        </section>
-   </div>
-</div>
-  <header class="panel-heading" data-ng-init="findCity()">
-            {{deletemessage}}  {{findmessage}}
-   </header>
-  <div class="panel-body">
-    <div class="adv-table">
-     <table  class="display table table-bordered table-striped" id="dynamic-table">
-       <thead>
-            <tr>
-                <th>Country</th>
-                <th>City</th>
-                <th>Action</th>
-            </tr>
-       </thead>
-        <tbody>
-          <tr class="gradeU" ng-repeat="city in cityList.city">
-                <td>{{city.countryid.country}}</td>
-                <td>{{city.city}}</td>
-                <td><a href="" ng-click="editCity()">Edit</a>&nbsp;&nbsp;<span><a href="" ng-click="deleteCity(city,$index)">Delete</a></span></td>    
-          </tr>
-        </tbody>
-     </table>
+  <div class="row">
+    <div class="col-lg-12">
+     <section class="panel">
+        <header class="panel-heading">
+        City
+        </header>
+        <div class="panel-body" data-ng-init="findCountry()">
+          <form class="form-horizontal adminex-form" role="form" ng-submit="createCity()">
+           <div class="form-group">
+             <select class="form-control m-bot15" data-ng-model="country">
+                <option>Select_Country</option>
+                <option value="{{country}}" ng-repeat="country in countryList.country">{{country.country}}</option>
+              </select>
+              <input class="form-control" type="text" placeholder="Enter City" data-ng-model="city">
+              <button type="submit" class="btn btn-primary">Add</button>
+            </div>
+         </form>
+       </div>
+        {{message}}{{editmessage}}
+      </section>
+    </div>
   </div>
-</div>
- </section>
- </div>
- </div>
- </header>
+    <header class="panel-heading">
+              {{deletemessage}}  {{findmessage}}
+    </header>
+    <div class="panel-body" data-ng-controller="ModalDemoCtrl">
+      <div class="adv-table">
+        <table  class="display table table-bordered table-striped" id="dynamic-table">
+         <thead>
+              <tr>
+                  <th>Country</th>
+                  <th>City</th>
+                  <th>Action</th>
+              </tr>
+         </thead>
+         <tbody>
+            <tr class="gradeU" ng-repeat="city in cityList.city">
+                  <td>{{city.countryid.country}}</td>
+                  <td>{{city.city}}</td>
+                  <td><a href="" ng-click="open(city,'city')">Edit</a>&nbsp;&nbsp;<span><a href="" ng-click="deleteCity(city,$index)">Delete</a></span></td>    
+            </tr>
+          </tbody>
+       </table>
+      </div>
+       <!-- pop html and jquery start from hear  -->
+        <script type="text/ng-template" id="myModalContent.html">
+            <div class="modal-header">
+                <h3>Edit Country</h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <div class="panel-body">
+                            <form class="form-horizontal adminex-form" role="form" ng-submit=" editCity()">
+                               <div class="form-group">
+                                 <select class="form-control m-bot15" data-ng-model="editcitycountry">
+                                    <option value="{{editcitycountry}}">{{editcitycountry}}</option>
+                                    <option value="{{country}}" ng-repeat="country in countryList.country">{{country.country}}</option>
+                                  </select>
+                                   <input class="form-control" type="text" placeholder="Enter City" data-ng-model="editcityname">
+                                   <input class="form-control" type="hidden" data-ng-model="editcitycountryid">
+                                   <input class="form-control" type="hidden" data-ng-model="editcityid">
+                                  <button type="submit" class="btn btn-primary">Update</button>
+                                </div>
+                           </form>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+           </div>
+        </script>
+        <!-- pop html and jquery stop from hear  -->
+   </div>
 </div>

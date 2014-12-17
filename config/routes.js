@@ -12,7 +12,15 @@ module.exports = function routes() {
   this.post('/createCountry','data#createCountry');
   this.post('/findCountry','data#findCountry');
   this.post('/deleteCountry','data#deleteCountry');
+  this.post('/editCountry','data#editCountry');
   this.post('/createCity','data#createCity');
   this.post('/findCity','data#findCity');
   this.post('/deleteCity','data#deleteCity');
+  this.post('/editCity','data#editCity');
+  this.post('/createCategory','data#createCategory');
+  this.post('/findcategory','data#findcategory');
+  this.post('/deleteCategory','data#deleteCategory');
+  this.post('/editCategory','data#editCategory');
+  this.post('/socialid','data#socialid');
+  this.get('/getCountryCity','data#getCountryCity');
 }

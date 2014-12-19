@@ -3,7 +3,8 @@ var locomotive = require('locomotive')
    Country = require('../models/countries'),
    City    = require('../models/cities'),
    Category = require('../models/categories'),
-   User      = require('../models/users');
+   User      = require('../models/users'),
+   Event      = require('../models/events');
 
 var dataController = new Controller();
 
@@ -253,5 +254,36 @@ dataController.getCountryCity = function(){
       next();
     }
   });
+}
+dataController.createEvent = function(req,res){
+var th = this;
+var data = th.req.body.event;
+Event.create(data,function(err,results){
+  if (err)
+    {
+      console.log(err);
+      th.res.json({message : "Db Error",status : "false"});
+      }
+    else
+    {
+      th.res.json({message : "Event added successfully",status : "true",event : results});
+    }
+})
+
+}
+dataController.findEvent = function(req,res)
+{
+  var th = this;
+  Event.find({},function(err,results){
+    if (err)
+      {
+         console.log(err);
+         th.res.json({message : "Db Error",status : false});
+      }
+      else{
+        console.log(results);
+        th.res.json({event : results,status : true});
+      }
+  })
 }
 module.exports = dataController;

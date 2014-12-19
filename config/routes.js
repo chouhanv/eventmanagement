@@ -23,4 +23,6 @@ module.exports = function routes() {
   this.post('/editCategory','data#editCategory');
   this.post('/socialid','data#socialid');
   this.get('/getCountryCity','data#getCountryCity');
+  this.post('/createEvent','data#createEvent');
+  this.post('/findEvent','data#findEvent');
 }

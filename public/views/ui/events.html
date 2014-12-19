@@ -1,0 +1,149 @@
+<div class="page">
+  <section class="panel panel-default">
+    <div class="panel-heading">Create Event</div>
+    <div class="panel-body" data-ng-controller="DatepickerDemoCtrl" data-ng-init="getCountryCity()"> <!-- white color body start from hear -->
+      <div class="form-group">
+         <form ng-submit="createEvent()">
+            <div class="col-md-5 colm-left"><!--colm-left start -->
+                  <div class="form-group">
+                    <div class="name-block"><label for="">Event Name*</label></div> 
+                    <div class="row">
+                      <div class="col-md-12">
+                      <input  type="text" class="form-control" placeholder="Event Name*" data-ng-model="event.eventname"> 
+                      </div>
+                   </div>
+                </div>
+                <div class="form-group">
+                  <div class="name-block"><label for="">Country*</label></div> 
+                    <div class="row">
+                      <div class="col-md-12">
+                      <select class="form-control selct-refer" data-ng-model="event.countryid">
+                      <option value="{{country.id}}"  ng-repeat="country in countrycity.countries">{{country.countryname}}</option>
+                       </select>
+                      </div>
+                  </div>
+               </div>
+                <div class="form-group">
+                  <div class="name-block"><label for="">Event Description*</label></div> 
+                   <div class="row">
+                     <div class="col-md-12">
+                       <textarea class="form-control"
+                         data-ng-model="event.description" placeholder="Event Description" rows="2">
+                       </textarea>
+                     </div>
+                  </div>
+              </div>
+            <div class="form-group">
+              <div class="name-block"><label for="">Start Date</label></div> 
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="input-group ui-datepicker">
+                            <input type="text" 
+                                   class="form-control"
+                                   datepicker-popup="{{format}}"
+                                   data-ng-model="dtstart"
+                                   is-open="opened"
+                                   min="minDate"
+                                   max="'2015-06-22'"
+                                   datepicker-options="dateOptions" 
+                                   date-disabled="disabled(date, mode)"
+                                   ng-required="true" 
+                                   close-text="Close">
+                            <span class="input-group-addon" ng-click="open($event)"><i class="fa fa-calendar"></i></span>
+                        </div>
+                </div>
+              </div>
+          </div>
+           <div class="form-group">
+              <div class="name-block"><label for="">Latitude*</label></div> 
+               <div class="row">
+                  <div class="col-md-12">
+                   <input  type="text" class="form-control" placeholder="Latitude*" data-ng-model="event.latitude"> 
+                 </div>
+               </div>
+           </div>
+       </div><!--colm left close-->
+             <div class="col-md-5 right-sectn"> <!--colm-right start-->
+                <div class="form-group">
+                    <div class="name-block"><label for="">Event Location*</label></div> 
+                    <div class="row">
+                       <div class="col-md-12">
+                           <input  type="text" class="form-control" placeholder="Event Location*" data-ng-model="event.eventlocation">                        
+                       </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="name-block"><label for="">City*</label></div> 
+                   <div class="row">
+                       <div class="col-md-12" ng-if="!event.countryid">
+                          <select class="form-control selct-refer">
+                            <option ng-selected="event.city==''">--City--</option>
+                         </select> 
+                      </div>
+                        <div class="col-md-12" ng-repeat="country in countrycity.countries" ng-if="country.id==event.countryid"> 
+                          <select class="form-control selct-refer" data-ng-model="event.cityid">
+                           <option  value="{{city._id}}" ng-repeat="city in country.cities track by $index">{{city.city}}
+                           </option>
+                         </select>                    
+                       </div>
+                   </div>
+                  </div>
+                  <div ng-repeat = "multiplephoto in photosurl">
+                  <div class="form-group">
+                     <div class="name-block"><label for="">PhotoUrl*</label></div> 
+                     <div class="row">
+                     <div class="col-md-12">
+                        <input  type="text" class="form-control" placeholder="Photos Url*" data-ng-model="multiplephoto.photourl">      
+                    </div>
+                  </div>
+                </div>
+              </div>
+                <div class="form-group">
+                  <button type="button" ng-click="expandPhotoUrl()">+</button>
+                </div>
+                 <div class="form-group">
+                  <div class="name-block"><label for="">End Date</label></div> 
+                  <div class="row">
+                     <div class="col-md-12">
+                      <div class="input-group ui-datepicker">
+                        <input type="text" 
+                               class="form-control"
+                               datepicker-popup="{{format}}"
+                               data-ng-model="dtend"
+                               is-open="opened"
+                               min="minDate"
+                               max="'2015-06-22'"
+                               datepicker-options="dateOptions" 
+                               date-disabled="disabled(date, mode)"
+                               ng-required="true" 
+                               close-text="Close">
+                        <span class="input-group-addon" ng-click="open($event)"><i class="fa fa-calendar"></i></span>
+                     </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="name-block"><label for="">Longitude*</label></div> 
+                 <div class="row">
+                    <div class="col-md-12">
+                        <input  type="text" class="form-control" placeholder="longitude*" data-ng-model="event.longitude">                        
+                    </div>
+                </div>
+            </div>
+        </div><!--colm right close-->
+                 <div class="butn-box-content"  style="margin-left:1010px;">                         
+                  <div class="butn-box">              
+                   <button class="btn btnn-top btn-primary" type="submit">Save</button>
+                  </div>
+                </div>
+                <div class="butn-box-content"  style="margin-left:890px; ;margin-top:-34px">                         
+                  <div class="butn-box">              
+                   <button class="btn btnn-top btn-primary" ng-click="getcoordinate()" type="button">GetLocation</button>
+                  </div>
+                </div>
+              </form>
+               {{message}}
+      </div><!--form group-->
+    </div>
+  </section> 
+</div>

@@ -1,11 +1,9 @@
-<div data-ng-controller="tableCtrl">
-    <!-- Country header start from  hear  -->
-    <div class="row">
+<div class="page page-table" data-ng-controller="tableCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Create Country</strong></div>
+        <div class="row">
       <div class="col-lg-12">
             <section class="panel">
-                <header class="panel-heading">
-                 Country
-                </header>
                 <div class="panel-body">
                     <form class="form-horizontal adminex-form" role="form" ng-submit="createCountry()">
                             <div class="form-group">
@@ -16,34 +14,75 @@
                             </div>
                     </form>
                </div>
-               {{message}}
+               {{message}} {{editmessage}}  {{deletemessage}} 
             </section>
        </div>
     </div>
-    <!--country header stop from hear  -->
-    <!-- table start from hear  -->
-    <header class="panel-heading">
-    {{deletemessage}} {{editmessage}}
-    </header>
-    <div class="panel-body" data-ng-controller="ModalDemoCtrl">
-        <div class="adv-table">
-            <table  class="display table table-bordered table-striped" id="dynamic-table">
-                <thead>
-                    <tr>
-                        <th>Country</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="gradeU" ng-repeat="country in countryList.country">
-                    <td>{{country ? country.country : 'No data found'}}</td>
-                    <td><a href="" ng-click="open(country,'country')">Edit</a>&nbsp;&nbsp;<span><a href="" ng-click="deleteCountry(country,$index)">Delete</a></span></td>    
-                    </tr>
-                </tbody>
-            </table>
+        <div class="table-filters">
+            <div class="row">
+                <div class="col-sm-4 col-xs-6">
+                    <form>
+                        <input type="text"
+                               placeholder="search"
+                               class="form-control"
+                               data-ng-model="searchKeywords"
+                               data-ng-keyup="search()">
+                    </form>
+                </div>
+                <div class="col-sm-3 col-xs-6 filter-result-info">
+                    <span>
+                        Showing {{filteredStores.length}}/{{countryList.country.length}} entries
+                    </span>              
+                </div>
+            </div>
         </div>
-        <!-- pop html and jquery start from hear  -->
-        <script type="text/ng-template" id="myModalContent.html">
+
+        <table class="table table-bordered table-striped table-responsive" data-ng-controller="ModalDemoCtrl">
+            <thead>
+                <tr>
+                    <th><div class="th">
+                        Country
+                        
+                    </div></th>
+                    <th><div class="th">
+                       Action
+                    </div></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="store in countryList.country |filter : searchKeywords">
+                     <td>{{store ? store.country : 'No data found'}}</td>
+                    <td><a href="" ng-click="open(store,'country')">Edit</a>&nbsp;&nbsp;<span><a href="" ng-click="deleteCountry(store,$index)">Delete</a></span></td> 
+                </tr>
+            </tbody>
+        </table>
+
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show 
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select> 
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                ng-model="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                ng-change="select(currentPage)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+      <script type="text/ng-template" id="myModalContent.html">
             <div class="modal-header">
                 <h3>Edit Country</h3>
             </div>
@@ -69,8 +108,5 @@
            </div>
            </form>
         </script>
-        <!-- pop html and jquery stop from hear  -->
-    </div>
-</div>
-<!-- table stop from hear  -->
 
+</div>

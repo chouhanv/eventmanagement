@@ -27,11 +27,18 @@ module.exports = (function () {
             type : Schema.Types.ObjectId,
             ref  : 'cities'
         }, 
+        categoryid : {
+            type : Schema.Types.ObjectId,
+            ref  : 'categories'
+        }, 
         description : {
             type : String,
             require :  true
         }, 
-        photosurl : [], 
+        photosurl : {
+            type : String,
+            require :  true
+        }, 
         dtstart : {
             type : String,
             require :  true
@@ -47,7 +54,12 @@ module.exports = (function () {
         longitude : {
             type : String,
             require :  true
-        },   
+        }, 
+        istopevent :
+        {
+             type : Boolean,
+              require :  true
+        }, 
         status : {
             type : Boolean,
             default :  false,

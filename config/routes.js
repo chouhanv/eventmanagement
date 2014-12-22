@@ -25,4 +25,5 @@ module.exports = function routes() {
   this.get('/getCountryCity','data#getCountryCity');
   this.post('/createEvent','data#createEvent');
   this.post('/findEvent','data#findEvent');
+  this.post('/getcategory','data#getcategory');
 }

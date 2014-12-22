@@ -1,10 +1,10 @@
 (function(){"use strict";angular.module("app.chart.ctrls",[])
-	.controller("chartCtrl",["$scope",
+.controller("chartCtrl",["$scope",
 		function($scope){return $scope.easypiechart={percent:65,options:{animate:{duration:1e3,enabled:!0},barColor:"#31C0BE",lineCap:"round",size:180,lineWidth:5}},$scope.easypiechart2={percent:35,options:{animate:{duration:1e3,enabled:!0},barColor:"#66B5D7",lineCap:"round",size:180,lineWidth:10}},$scope.easypiechart3={percent:68,options:{animate:{duration:1e3,enabled:!0},barColor:"#60CD9B",lineCap:"square",size:180,lineWidth:20,scaleLength:0}},$scope.gaugeChart1={data:{maxValue:3e3,animationSpeed:40,val:1375},options:{lines:12,angle:0,lineWidth:.47,pointer:{length:.6,strokeWidth:.03,color:"#000000"},limitMax:"false",colorStart:"#A3C86D",colorStop:"#A3C86D",strokeColor:"#E0E0E0",generateGradient:!0,percentColors:[[0,"#60CD9B"],[1,"#60CD9B"]]}},$scope.gaugeChart2={data:{maxValue:3e3,animationSpeed:45,val:1200},options:{lines:12,angle:0,lineWidth:.47,pointer:{length:.6,strokeWidth:.03,color:"#464646"},limitMax:"true",colorStart:"#7ACBEE",colorStop:"#7ACBEE",strokeColor:"#F1F1F1",generateGradient:!0,percentColors:[[0,"#66B5D7"],[1,"#66B5D7"]]}},$scope.gaugeChart3={data:{maxValue:3e3,animationSpeed:50,val:1100},options:{lines:12,angle:0,lineWidth:.47,pointer:{length:.6,strokeWidth:.03,color:"#464646"},limitMax:"true",colorStart:"#FF7857",colorStop:"#FF7857",strokeColor:"#F1F1F1",generateGradient:!0,percentColors:[[0,"#E87352"],[1,"#E87352"]]}}}]).controller("morrisChartCtrl",["$scope",function($scope){return $scope.mainData=[{month:"2013-01",xbox:294e3,will:136e3,playstation:244e3},{month:"2013-02",xbox:228e3,will:335e3,playstation:127e3},{month:"2013-03",xbox:199e3,will:159e3,playstation:13e4},{month:"2013-04",xbox:174e3,will:16e4,playstation:82e3},{month:"2013-05",xbox:255e3,will:318e3,playstation:82e3},{month:"2013-06",xbox:298400,will:401800,playstation:98600},{month:"2013-07",xbox:37e4,will:225e3,playstation:159e3},{month:"2013-08",xbox:376700,will:303600,playstation:13e4},{month:"2013-09",xbox:527800,will:301e3,playstation:119400}],$scope.simpleData=[{year:"2008",value:20},{year:"2009",value:10},{year:"2010",value:5},{year:"2011",value:5},{year:"2012",value:20},{year:"2013",value:19}],$scope.comboData=[{year:"2008",a:20,b:16,c:12},{year:"2009",a:10,b:22,c:30},{year:"2010",a:5,b:14,c:20},{year:"2011",a:5,b:12,c:19},{year:"2012",a:20,b:19,c:13},{year:"2013",a:28,b:22,c:20}],$scope.donutData=[{label:"Download Sales",value:12},{label:"In-Store Sales",value:30},{label:"Mail-Order Sales",value:20},{label:"Online Sales",value:19}]}]).controller("flotChartCtrl",["$scope",function($scope){var areaChart,barChart,lineChart1;return lineChart1={},lineChart1.data1=[[1,15],[2,20],[3,14],[4,10],[5,10],[6,20],[7,28],[8,26],[9,22],[10,23],[11,24]],lineChart1.data2=[[1,9],[2,15],[3,17],[4,21],[5,16],[6,15],[7,13],[8,15],[9,29],[10,21],[11,29]],$scope.line1={},$scope.line1.data=[{data:lineChart1.data1,label:"Product A"},{data:lineChart1.data2,label:"Product B",lines:{fill:!1}}],$scope.line1.options={series:{lines:{show:!0,fill:!0,fillColor:{colors:[{opacity:0},{opacity:.3}]}},points:{show:!0,lineWidth:2,fill:!0,fillColor:"#ffffff",symbol:"circle",radius:5}},colors:["#31C0BE","#8170CA","#E87352"],tooltip:!0,tooltipOpts:{defaultTheme:!1},grid:{hoverable:!0,clickable:!0,tickColor:"#f9f9f9",borderWidth:1,borderColor:"#eeeeee"},xaxis:{ticks:[[1,"Jan."],[2,"Feb."],[3,"Mar."],[4,"Apr."],[5,"May"],[6,"June"],[7,"July"],[8,"Aug."],[9,"Sept."],[10,"Oct."],[11,"Nov."],[12,"Dec."]]}},areaChart={},areaChart.data1=[[2007,15],[2008,20],[2009,10],[2010,5],[2011,5],[2012,20],[2013,28]],areaChart.data2=[[2007,15],[2008,16],[2009,22],[2010,14],[2011,12],[2012,19],[2013,22]],$scope.area={},$scope.area.data=[{data:areaChart.data1,label:"Value A",lines:{fill:!0}},{data:areaChart.data2,label:"Value B",points:{show:!0},yaxis:2}],$scope.area.options={series:{lines:{show:!0,fill:!1},points:{show:!0,lineWidth:2,fill:!0,fillColor:"#ffffff",symbol:"circle",radius:5},shadowSize:0},grid:{hoverable:!0,clickable:!0,tickColor:"#f9f9f9",borderWidth:1,borderColor:"#eeeeee"},colors:["#60CD9B","#8170CA"],tooltip:!0,tooltipOpts:{defaultTheme:!1},xaxis:{mode:"time"},yaxes:[{},{position:"right"}]},barChart={},barChart.data1=[[2008,20],[2009,10],[2010,5],[2011,5],[2012,20],[2013,28]],barChart.data2=[[2008,16],[2009,22],[2010,14],[2011,12],[2012,19],[2013,22]],barChart.data3=[[2008,12],[2009,30],[2010,20],[2011,19],[2012,13],[2013,20]],$scope.barChart={},$scope.barChart.data=[{label:"Value A",data:barChart.data1},{label:"Value B",data:barChart.data2},{label:"Value C",data:barChart.data3}],$scope.barChart.options={series:{stack:!0,bars:{show:!0,fill:1,barWidth:.3,align:"center",horizontal:!1,order:1}},grid:{hoverable:!0,borderWidth:1,borderColor:"#eeeeee"},tooltip:!0,tooltipOpts:{defaultTheme:!1},colors:["#60CD9B","#66B5D7","#EEC95A","#E87352"]},$scope.pieChart={},$scope.pieChart.data=[{label:"Download Sales",data:12},{label:"In-Store Sales",data:30},{label:"Mail-Order Sales",data:20},{label:"Online Sales",data:19}],$scope.pieChart.options={series:{pie:{show:!0}},legend:{show:!0},grid:{hoverable:!0,clickable:!0},colors:["#60CD9B","#66B5D7","#EEC95A","#E87352"],tooltip:!0,tooltipOpts:{content:"%p.0%, %s",defaultTheme:!1}},$scope.donutChart={},$scope.donutChart.data=[{label:"Download Sales",data:12},{label:"In-Store Sales",data:30},{label:"Mail-Order Sales",data:20},{label:"Online Sales",data:19}],$scope.donutChart.options={series:{pie:{show:!0,innerRadius:.5}},legend:{show:!0},grid:{hoverable:!0,clickable:!0},colors:["#60CD9B","#66B5D7","#EEC95A","#E87352"],tooltip:!0,tooltipOpts:{content:"%p.0%, %s",defaultTheme:!1}},$scope.donutChart2={},$scope.donutChart2.data=[{label:"Download Sales",data:12},{label:"In-Store Sales",data:30},{label:"Mail-Order Sales",data:20},{label:"Online Sales",data:19},{label:"Direct Sales",data:15}],$scope.donutChart2.options={series:{pie:{show:!0,innerRadius:.5}},legend:{show:!1},grid:{hoverable:!0,clickable:!0},colors:["#1BB7A0","#39B5B9","#52A3BB","#619CC4","#6D90C5"],tooltip:!0,tooltipOpts:{content:"%p.0%, %s",defaultTheme:!1}}}]).controller("flotChartCtrl.realtime",["$scope",function(){}]).controller("sparklineCtrl",["$scope",function($scope){return $scope.demoData1={data:[3,1,2,2,4,6,4,5,2,4,5,3,4,6,4,7],options:{type:"line",lineColor:"#fff",highlightLineColor:"#fff",fillColor:"#60CD9B",spotColor:!1,minSpotColor:!1,maxSpotColor:!1,width:"100%",height:"150px"}},$scope.simpleChart1={data:[3,1,2,3,5,3,4,2],options:{type:"line",lineColor:"#31C0BE",fillColor:"#bce0df",spotColor:!1,minSpotColor:!1,maxSpotColor:!1}},$scope.simpleChart2={data:[3,1,2,3,5,3,4,2],options:{type:"bar",barColor:"#31C0BE"}},$scope.simpleChart3={data:[3,1,2,3,5,3,4,2],options:{type:"pie",sliceColors:["#31C0BE","#60CD9B","#E87352","#8170CA","#EEC95A","#60CD9B"]}},$scope.tristateChart1={data:[1,2,-3,-5,3,1,-4,2],options:{type:"tristate",posBarColor:"#95b75d",negBarColor:"#fa8564"}},$scope.largeChart1={data:[3,1,2,3,5,3,4,2],options:{type:"line",lineColor:"#674E9E",highlightLineColor:"#7ACBEE",fillColor:"#927ED1",spotColor:!1,minSpotColor:!1,maxSpotColor:!1,width:"100%",height:"150px"}},$scope.largeChart2={data:[3,1,2,3,5,3,4,2],options:{type:"bar",barColor:"#31C0BE",barWidth:10,width:"100%",height:"150px"}},$scope.largeChart3={data:[3,1,2,3,5],options:{type:"pie",sliceColors:["#31C0BE","#60CD9B","#E87352","#8170CA","#EEC95A","#60CD9B"],width:"150px",height:"150px"}}}])}).call(this),function(){"use strict";angular.module("app.chart.directives",[]).directive("gaugeChart",[function(){return{restrict:"A",scope:{data:"=",options:"="},link:function(scope,ele){var data,gauge,options;return data=scope.data,options=scope.options,gauge=new Gauge(ele[0]).setOptions(options),gauge.maxValue=data.maxValue,gauge.animationSpeed=data.animationSpeed,gauge.set(data.val)}}}]).directive("flotChart",[function(){return{restrict:"A",scope:{data:"=",options:"="},link:function(scope,ele){var data,options,plot;return data=scope.data,options=scope.options,plot=$.plot(ele[0],data,options)}}}]).directive("flotChartRealtime",[function(){return{restrict:"A",link:function(scope,ele){var data,getRandomData,plot,totalPoints,update,updateInterval;return data=[],totalPoints=300,getRandomData=function(){var i,prev,res,y;for(data.length>0&&(data=data.slice(1));data.length<totalPoints;)prev=data.length>0?data[data.length-1]:50,y=prev+10*Math.random()-5,0>y?y=0:y>100&&(y=100),data.push(y);for(res=[],i=0;i<data.length;)res.push([i,data[i]]),++i;return res},update=function(){plot.setData([getRandomData()]),plot.draw(),setTimeout(update,updateInterval)},data=[],totalPoints=300,updateInterval=200,plot=$.plot(ele[0],[getRandomData()],{series:{lines:{show:!0,fill:!0},shadowSize:0},yaxis:{min:0,max:100},xaxis:{show:!1},grid:{hoverable:!0,borderWidth:1,borderColor:"#eeeeee"},colors:["#5BDDDC"]}),update()}}}]).directive("sparkline",[function(){return{restrict:"A",scope:{data:"=",options:"="},link:function(scope,ele){var data,options,sparkResize,sparklineDraw;return data=scope.data,options=scope.options,sparkResize=void 0,sparklineDraw=function(){return ele.sparkline(data,options)},$(window).resize(function(){return clearTimeout(sparkResize),sparkResize=setTimeout(sparklineDraw,200)}),sparklineDraw()}}}]).directive("morrisChart",[function(){return{restrict:"A",scope:{data:"="},link:function(scope,ele,attrs){var colors,data,func,options;switch(data=scope.data,attrs.type){case"line":return colors=void 0===attrs.lineColors||""===attrs.lineColors?null:JSON.parse(attrs.lineColors),options={element:ele[0],data:data,xkey:attrs.xkey,ykeys:JSON.parse(attrs.ykeys),labels:JSON.parse(attrs.labels),lineWidth:attrs.lineWidth||2,lineColors:colors||["#0b62a4","#7a92a3","#4da74d","#afd8f8","#edc240","#cb4b4b","#9440ed"]},new Morris.Line(options);case"area":return colors=void 0===attrs.lineColors||""===attrs.lineColors?null:JSON.parse(attrs.lineColors),options={element:ele[0],data:data,xkey:attrs.xkey,ykeys:JSON.parse(attrs.ykeys),labels:JSON.parse(attrs.labels),lineWidth:attrs.lineWidth||2,lineColors:colors||["#0b62a4","#7a92a3","#4da74d","#afd8f8","#edc240","#cb4b4b","#9440ed"],behaveLikeLine:attrs.behaveLikeLine||!1,fillOpacity:attrs.fillOpacity||"auto",pointSize:attrs.pointSize||4},new Morris.Area(options);case"bar":return colors=void 0===attrs.barColors||""===attrs.barColors?null:JSON.parse(attrs.barColors),options={element:ele[0],data:data,xkey:attrs.xkey,ykeys:JSON.parse(attrs.ykeys),labels:JSON.parse(attrs.labels),barColors:colors||["#0b62a4","#7a92a3","#4da74d","#afd8f8","#edc240","#cb4b4b","#9440ed"],stacked:attrs.stacked||null},new Morris.Bar(options);case"donut":return colors=void 0===attrs.colors||""===attrs.colors?null:JSON.parse(attrs.colors),options={element:ele[0],data:data,colors:colors||["#0B62A4","#3980B5","#679DC6","#95BBD7","#B0CCE1","#095791","#095085","#083E67","#052C48","#042135"]},attrs.formatter&&(func=new Function("y","data",attrs.formatter),options.formatter=func),new Morris.Donut(options)}}}}])}.call(this),function(){"use strict";angular.module("app.ui.form.ctrls",[]).controller("TagsDemoCtrl",["$scope",function($scope){return $scope.tags=["foo","bar"]}])
 .controller("DatepickerDemoCtrl",["$scope","$http","$rootScope",
 	function($scope,$http,$rootScope)
 	{
-		$scope.event = {
+		$rootScope.event = {
 			eventname : "",
 			eventlocation : "",
 			countryid : "",
@@ -13,11 +13,29 @@
 			dtstart : "",
 			dtend : "",
 			latitude : "",
-			longitude : ""
+			longitude : "",
+			photosurl  : "",
+			istopevent : "",
+			categoryid : ""
 		},
-		$scope.photosurl = [{
-			photourl : ""
-		    }],
+
+		$scope.initlizeDatePicker = function(id){
+			console.log(id);
+			$("#"+id).datepicker({
+	          inline: true
+	        });
+
+	        $("#"+id).change(function(evt){
+	        	
+	        	if(id == "dtend"){
+				$scope.event.dtend = $("#"+id).val();
+				} else if(id == 'dtstart'){
+					$scope.event.dtstart = $("#"+id).val();
+				}
+
+	        });
+		},
+
 		 $scope.today=function()
 		{
 			return $scope.dt=new Date
@@ -45,27 +63,21 @@
 		$scope.dateOptions={"year-format":"'yy'","starting-day":1},
 		$scope.formats=["dd-MMMM-yyyy","yyyy/MM/dd","shortDate"],
 		$scope.format=$scope.formats[0],
-		 $scope.expandPhotoUrl = function()
-	   {
-	   	console.log($scope.photosurl);
-	   	$scope.photosurl.push({});
-	   },
 	   $scope.getcoordinate = function()
 	   {
 	   	$scope.selectedcountry = "";
 	   	$scope.selectedcity = "";
-	   	console.log($scope.event.countryid);
-	   	console.log($scope.event.cityid);
 	   	angular.forEach($rootScope.countrycity.countries, function(val, i){
 	   	 if (val.id == $scope.event.countryid){
 	   	 	    $scope.selectedcountry = val.countryname;
 	   	 		$scope.selectedcity= val.cities[i].city;
-	   	 		 $http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+$scope.selectedcountry+'+'+$scope.selectedcity+'+'+$scope.event.eventlocation)
+	   	 		 $http.get('https://maps.googleapis.com/maps/api/geocode/json?address='+$scope.selectedcountry+'+'+$scope.selectedcity+'+'+$rootScope.event.eventlocation)
 	            .success(function(data){
 		    	if (data.status="ok"){
 		    		$scope.data = data;
-		    		$scope.event.latitude = data.results[0].geometry.location.lat;
-		    		$scope.event.longitude = data.results[0].geometry.location.lng;
+		    		$rootScope.event.latitude = data.results[0].geometry.location.lat;
+		    		$rootScope.event.longitude = data.results[0].geometry.location.lng;
+		    		$scope.initialize($rootScope.event.latitude,$rootScope.event.longitude);
 		    	}
 		    	else{
 		    		console.log(error);
@@ -91,23 +103,77 @@
 			 	console.log(error);
 			 })
 		},
+		$scope.getcategory = function()
+		{
+			$http.post('/getcategory')
+			.success(function(data){
+				if (data.status){
+					$scope.getcategory = data.category;
+				}   
+			})
+			.error(function(error){
+			 	console.log(error);
+			 })
+		}
+
+		$scope.initialize = function(lat,lng) {        
+	        var mapcanvas = document.createElement('div');
+	        mapcanvas.id = 'mapcanvas';
+	        mapcanvas.style.height = "300px";
+	        mapcanvas.style.width = '100%';
+	        mapcanvas.style.position = 'fixed';
+	        document.querySelector('#map').appendChild(mapcanvas);        
+	        var latlng = new google.maps.LatLng(lat, lng);
+	        var myOptions = {
+	            zoom: 13,
+	            center: latlng,
+	            mapTypeControl: false,
+	            navigationControlOptions: { style: google.maps.NavigationControlStyle.SMALL },
+	            mapTypeId: google.maps.MapTypeId.ROADMAP
+	        };
+	        map = new google.maps.Map(document.getElementById("mapcanvas"), myOptions);
+	        $scope.geocoder = new google.maps.Geocoder();
+	        var marker = new google.maps.Marker({
+	            position: latlng,
+	            map: map,
+	            draggable: true,          
+	            title: "You are here!"
+	        });
+	        google.maps.event.addListener(marker, "dragend", function (event) {
+	            var point = marker.getPosition();
+	            map.panTo(point); 
+	            $scope.codeLatLng(marker.getPosition().lat(), marker.getPosition().lng());
+	        });               
+	    };   
+	    
+	    $scope.codeLatLng = function (lat,lng) {
+
+	        var latlng = new google.maps.LatLng(lat, lng);
+
+	        setTimeout(function () {
+	        	console.log(latlng);
+	            $scope.geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+	                if (status == google.maps.GeocoderStatus.OK) {
+	                     $rootScope.event.eventlocation = results[0].formatted_address;
+	                     $rootScope.event.latitude =  results[0].geometry.location.D;
+	                     $rootScope.event.longitude = results[0].geometry.location.k;
+	                      console.log(results[0].geometry.location.k, results[0].geometry.location.D,results[0].formatted_address);
+	                      console.log($rootScope.event);
+	                      $rootScope.$apply();
+	                } else {
+	                    alert("Geocoder failed due to: " + status);
+	                }
+	            });
+	        }, 1500);
+	    };
+
+	    $scope.testMe = function(){
+	    	console.log($rootScope.event);
+	    }
+
 		$scope.createEvent = function()
 		{
-			$scope.saveevent = {
-			eventname : $scope.event.eventname,
-			eventlocation : $scope.event.eventlocation,
-			countryid : $scope.event.countryid,
-			cityid : $scope.event.cityid,
-			description : $scope.event.description,
-			photosurl :   $scope.photosurl,
-			dtstart : $scope.event.dtstart,
-			dtend : $scope.event.dtend,
-			latitude : $scope.event.latitude,
-			longitude :$scope.event.longitude
-
-		},
-			console.log("call createEvent");
-			$http.post('/createEvent',{event : $scope.saveevent})
+	           $http.post('/dsfsdf',{event : $scope.event})
 				.success(function(data){
 					if (data.status =="true")
 						{
@@ -127,11 +193,13 @@
 		}
 	}
 
-]).controller("TimepickerDemoCtrl",["$scope",function($scope){return $scope.mytime=new Date,$scope.hstep=1,$scope.mstep=15,$scope.options={hstep:[1,2,3],mstep:[1,5,10,15,25,30]},$scope.ismeridian=!0,$scope.toggleMode=function(){return $scope.ismeridian=!$scope.ismeridian},$scope.update=function(){var d;return d=new Date,d.setHours(14),d.setMinutes(0),$scope.mytime=d},$scope.changed=function(){return void 0},$scope.clear=function(){return $scope.mytime=null}}]).controller("TypeaheadCtrl",["$scope",function($scope){return $scope.selected=void 0,$scope.states=["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Dakota","North Carolina","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]}]).controller("RatingDemoCtrl",["$scope",function($scope){return $scope.rate=7,$scope.max=10,$scope.isReadonly=!1,$scope.hoveringOver=function(value){return $scope.overStar=value,$scope.percent=100*(value/$scope.max)},$scope.ratingStates=[{stateOn:"glyphicon-ok-sign",stateOff:"glyphicon-ok-circle"},{stateOn:"glyphicon-star",stateOff:"glyphicon-star-empty"},{stateOn:"glyphicon-heart",stateOff:"glyphicon-ban-circle"},{stateOn:"glyphicon-heart"},{stateOff:"glyphicon-off"}]}])}.call(this),function(){angular.module("app.ui.form.directives",[]).directive("uiRangeSlider",[function(){return{restrict:"A",link:function(scope,ele){return ele.slider()}}}]).directive("uiFileUpload",[function(){return{restrict:"A",link:function(scope,ele){return ele.bootstrapFileInput()}}}]).directive("uiSpinner",[function(){return{restrict:"A",compile:function(ele){return ele.addClass("ui-spinner"),{post:function(){return ele.spinner()}}}}}]).directive("uiWizardForm",[function(){return{link:function(scope,ele){return ele.steps()}}}])}.call(this),function(){"use strict";angular.module("app.form.validation",[]).controller("wizardFormCtrl",["$scope",function($scope){return $scope.wizard={firstName:"some name",lastName:"",email:"",password:"",age:"",address:""},$scope.isValidateStep1=function(){return void 0},$scope.finishedWizard=function(){return void 0}}]).controller("formConstraintsCtrl",["$scope",function($scope){var original;return $scope.form={required:"",minlength:"",maxlength:"",length_rage:"",type_something:"",confirm_type:"",foo:"",email:"",url:"",num:"",minVal:"",maxVal:"",valRange:"",pattern:""},original=angular.copy($scope.form),$scope.revert=function(){return $scope.form=angular.copy(original),$scope.form_constraints.$setPristine()},$scope.canRevert=function(){return!angular.equals($scope.form,original)||!$scope.form_constraints.$pristine},$scope.canSubmit=function(){return $scope.form_constraints.$valid&&!angular.equals($scope.form,original)}}]).controller("signinCtrl",["$scope",function($scope){var original;return $scope.user={email:"",password:""},$scope.showInfoOnSubmit=!1,original=angular.copy($scope.user),$scope.revert=function(){return $scope.user=angular.copy(original),$scope.form_signin.$setPristine()},$scope.canRevert=function(){return!angular.equals($scope.user,original)||!$scope.form_signin.$pristine},$scope.canSubmit=function(){return $scope.form_signin.$valid&&!angular.equals($scope.user,original)},$scope.submitForm=function(){return $scope.showInfoOnSubmit=!0,$scope.revert()}}]).controller("signupCtrl",["$scope",function($scope){var original;return $scope.user={name:"",email:"",password:"",confirmPassword:"",age:""},$scope.showInfoOnSubmit=!1,original=angular.copy($scope.user),$scope.revert=function(){return $scope.user=angular.copy(original),$scope.form_signup.$setPristine(),$scope.form_signup.confirmPassword.$setPristine()},$scope.canRevert=function(){return!angular.equals($scope.user,original)||!$scope.form_signup.$pristine},$scope.canSubmit=function(){return $scope.form_signup.$valid&&!angular.equals($scope.user,original)},$scope.submitForm=function(){return $scope.showInfoOnSubmit=!0,$scope.revert()}}]).directive("validateEquals",[function(){return{require:"ngModel",link:function(scope,ele,attrs,ngModelCtrl){var validateEqual;return validateEqual=function(value){var valid;return valid=value===scope.$eval(attrs.validateEquals),ngModelCtrl.$setValidity("equal",valid),"function"==typeof valid?valid({value:void 0}):void 0},ngModelCtrl.$parsers.push(validateEqual),ngModelCtrl.$formatters.push(validateEqual),scope.$watch(attrs.validateEquals,function(newValue,oldValue){return newValue!==oldValue?ngModelCtrl.$setViewValue(ngModelCtrl.$ViewValue):void 0})}}}])}.call(this),function(){"use strict";angular.module("app.map",[]).directive("uiJqvmap",[function(){return{restrict:"A",scope:{options:"="},link:function(scope,ele){var options;return options=scope.options,ele.vectorMap(options)}}}]).controller("jqvmapCtrl",["$scope",function($scope){var sample_data;return sample_data={af:"16.63",al:"11.58",dz:"158.97",ao:"85.81",ag:"1.1",ar:"351.02",am:"8.83",au:"1219.72",at:"366.26",az:"52.17",bs:"7.54",bh:"21.73",bd:"105.4",bb:"3.96",by:"52.89",be:"461.33",bz:"1.43",bj:"6.49",bt:"1.4",bo:"19.18",ba:"16.2",bw:"12.5",br:"2023.53",bn:"11.96",bg:"44.84",bf:"8.67",bi:"1.47",kh:"11.36",cm:"21.88",ca:"1563.66",cv:"1.57",cf:"2.11",td:"7.59",cl:"199.18",cn:"5745.13",co:"283.11",km:"0.56",cd:"12.6",cg:"11.88",cr:"35.02",ci:"22.38",hr:"59.92",cy:"22.75",cz:"195.23",dk:"304.56",dj:"1.14",dm:"0.38","do":"50.87",ec:"61.49",eg:"216.83",sv:"21.8",gq:"14.55",er:"2.25",ee:"19.22",et:"30.94",fj:"3.15",fi:"231.98",fr:"2555.44",ga:"12.56",gm:"1.04",ge:"11.23",de:"3305.9",gh:"18.06",gr:"305.01",gd:"0.65",gt:"40.77",gn:"4.34",gw:"0.83",gy:"2.2",ht:"6.5",hn:"15.34",hk:"226.49",hu:"132.28",is:"12.77","in":"1430.02",id:"695.06",ir:"337.9",iq:"84.14",ie:"204.14",il:"201.25",it:"2036.69",jm:"13.74",jp:"5390.9",jo:"27.13",kz:"129.76",ke:"32.42",ki:"0.15",kr:"986.26",undefined:"5.73",kw:"117.32",kg:"4.44",la:"6.34",lv:"23.39",lb:"39.15",ls:"1.8",lr:"0.98",ly:"77.91",lt:"35.73",lu:"52.43",mk:"9.58",mg:"8.33",mw:"5.04",my:"218.95",mv:"1.43",ml:"9.08",mt:"7.8",mr:"3.49",mu:"9.43",mx:"1004.04",md:"5.36",mn:"5.81",me:"3.88",ma:"91.7",mz:"10.21",mm:"35.65",na:"11.45",np:"15.11",nl:"770.31",nz:"138",ni:"6.38",ne:"5.6",ng:"206.66",no:"413.51",om:"53.78",pk:"174.79",pa:"27.2",pg:"8.81",py:"17.17",pe:"153.55",ph:"189.06",pl:"438.88",pt:"223.7",qa:"126.52",ro:"158.39",ru:"1476.91",rw:"5.69",ws:"0.55",st:"0.19",sa:"434.44",sn:"12.66",rs:"38.92",sc:"0.92",sl:"1.9",sg:"217.38",sk:"86.26",si:"46.44",sb:"0.67",za:"354.41",es:"1374.78",lk:"48.24",kn:"0.56",lc:"1",vc:"0.58",sd:"65.93",sr:"3.3",sz:"3.17",se:"444.59",ch:"522.44",sy:"59.63",tw:"426.98",tj:"5.58",tz:"22.43",th:"312.61",tl:"0.62",tg:"3.07",to:"0.3",tt:"21.2",tn:"43.86",tr:"729.05",tm:0,ug:"17.12",ua:"136.56",ae:"239.65",gb:"2258.57",us:"14624.18",uy:"40.71",uz:"37.72",vu:"0.72",ve:"285.21",vn:"101.99",ye:"30.02",zm:"15.69",zw:"5.57"},$scope.worldMap={map:"world_en",backgroundColor:null,color:"#ffffff",hoverOpacity:.7,selectedColor:"#666666",enableZoom:!0,showTooltip:!0,values:sample_data,scaleColors:["#C4FFFF","#07C0BB"],normalizeFunction:"polynomial"},$scope.USAMap={map:"usa_en",backgroundColor:null,color:"#ffffff",hoverColor:"#999999",selectedColor:"#666666",enableZoom:!0,showTooltip:!0,selectedRegion:"MO"},$scope.europeMap={map:"europe_en",backgroundColor:null,color:"#ffffff",hoverOpacity:.7,hoverColor:"#999999",enableZoom:!1,showTooltip:!1,values:sample_data,scaleColors:["#C4FFFF","#07C0BB"],normalizeFunction:"polynomial"}}])}.call(this),function(){"use strict";angular.module("app.page.ctrls",[]).controller("invoiceCtrl",["$scope","$window",function($scope){return $scope.printInvoice=function(){var originalContents,popupWin,printContents;return printContents=document.getElementById("invoice").innerHTML,originalContents=document.body.innerHTML,popupWin=window.open(),popupWin.document.open(),popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="styles/main.css" /></head><body onload="window.print()">'+printContents+"</html>"),popupWin.document.close()}}])}.call(this),function(){"use strict";angular.module("app.tables",[])
-.controller("tableCtrl",["$scope","$filter","$http","$rootScope",
-	function($scope,$filter,$http,$rootScope)
+]).controller("TimepickerDemoCtrl",["$scope",function($scope){return $scope.mytime=new Date,$scope.hstep=1,$scope.mstep=15,$scope.options={hstep:[1,2,3],mstep:[1,5,10,15,25,30]},$scope.ismeridian=!0,$scope.toggleMode=function(){return $scope.ismeridian=!$scope.ismeridian},$scope.update=function(){var d;return d=new Date,d.setHours(14),d.setMinutes(0),$scope.mytime=d},$scope.changed=function(){return void 0},$scope.clear=function(){return $scope.mytime=null}}]).controller("TypeaheadCtrl",["$scope",function($scope){return $scope.selected=void 0,$scope.states=["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Dakota","North Carolina","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]}]).controller("RatingDemoCtrl",["$scope",function($scope){return $scope.rate=7,$scope.max=10,$scope.isReadonly=!1,$scope.hoveringOver=function(value){return $scope.overStar=value,$scope.percent=100*(value/$scope.max)},$scope.ratingStates=[{stateOn:"glyphicon-ok-sign",stateOff:"glyphicon-ok-circle"},{stateOn:"glyphicon-star",stateOff:"glyphicon-star-empty"},{stateOn:"glyphicon-heart",stateOff:"glyphicon-ban-circle"},{stateOn:"glyphicon-heart"},{stateOff:"glyphicon-off"}]}])}.call(this),function(){angular.module("app.ui.form.directives",[]).directive("uiRangeSlider",[function(){return{restrict:"A",link:function(scope,ele){return ele.slider()}}}]).directive("uiFileUpload",[function(){return{restrict:"A",link:function(scope,ele){return ele.bootstrapFileInput()}}}]).directive("uiSpinner",[function(){return{restrict:"A",compile:function(ele){return ele.addClass("ui-spinner"),{post:function(){return ele.spinner()}}}}}]).directive("uiWizardForm",[function(){return{link:function(scope,ele){return ele.steps()}}}])}.call(this),function(){"use strict";angular.module("app.form.validation",[]).controller("wizardFormCtrl",["$scope",function($scope){return $scope.wizard={firstName:"some name",lastName:"",email:"",password:"",age:"",address:""},$scope.isValidateStep1=function(){return void 0},$scope.finishedWizard=function(){return void 0}}]).controller("formConstraintsCtrl",["$scope",function($scope){var original;return $scope.form={required:"",minlength:"",maxlength:"",length_rage:"",type_something:"",confirm_type:"",foo:"",email:"",url:"",num:"",minVal:"",maxVal:"",valRange:"",pattern:""},original=angular.copy($scope.form),$scope.revert=function(){return $scope.form=angular.copy(original),$scope.form_constraints.$setPristine()},$scope.canRevert=function(){return!angular.equals($scope.form,original)||!$scope.form_constraints.$pristine},$scope.canSubmit=function(){return $scope.form_constraints.$valid&&!angular.equals($scope.form,original)}}]).controller("signinCtrl",["$scope",function($scope){var original;return $scope.user={email:"",password:""},$scope.showInfoOnSubmit=!1,original=angular.copy($scope.user),$scope.revert=function(){return $scope.user=angular.copy(original),$scope.form_signin.$setPristine()},$scope.canRevert=function(){return!angular.equals($scope.user,original)||!$scope.form_signin.$pristine},$scope.canSubmit=function(){return $scope.form_signin.$valid&&!angular.equals($scope.user,original)},$scope.submitForm=function(){return $scope.showInfoOnSubmit=!0,$scope.revert()}}]).controller("signupCtrl",["$scope",function($scope){var original;return $scope.user={name:"",email:"",password:"",confirmPassword:"",age:""},$scope.showInfoOnSubmit=!1,original=angular.copy($scope.user),$scope.revert=function(){return $scope.user=angular.copy(original),$scope.form_signup.$setPristine(),$scope.form_signup.confirmPassword.$setPristine()},$scope.canRevert=function(){return!angular.equals($scope.user,original)||!$scope.form_signup.$pristine},$scope.canSubmit=function(){return $scope.form_signup.$valid&&!angular.equals($scope.user,original)},$scope.submitForm=function(){return $scope.showInfoOnSubmit=!0,$scope.revert()}}]).directive("validateEquals",[function(){return{require:"ngModel",link:function(scope,ele,attrs,ngModelCtrl){var validateEqual;return validateEqual=function(value){var valid;return valid=value===scope.$eval(attrs.validateEquals),ngModelCtrl.$setValidity("equal",valid),"function"==typeof valid?valid({value:void 0}):void 0},ngModelCtrl.$parsers.push(validateEqual),ngModelCtrl.$formatters.push(validateEqual),scope.$watch(attrs.validateEquals,function(newValue,oldValue){return newValue!==oldValue?ngModelCtrl.$setViewValue(ngModelCtrl.$ViewValue):void 0})}}}])}.call(this),function(){"use strict";angular.module("app.map",[])
+.directive("uiJqvmap",[function(){return{restrict:"A",scope:{options:"="},link:function(scope,ele){var options;return options=scope.options,ele.vectorMap(options)}}}]).controller("jqvmapCtrl",["$scope",function($scope){var sample_data;return sample_data={af:"16.63",al:"11.58",dz:"158.97",ao:"85.81",ag:"1.1",ar:"351.02",am:"8.83",au:"1219.72",at:"366.26",az:"52.17",bs:"7.54",bh:"21.73",bd:"105.4",bb:"3.96",by:"52.89",be:"461.33",bz:"1.43",bj:"6.49",bt:"1.4",bo:"19.18",ba:"16.2",bw:"12.5",br:"2023.53",bn:"11.96",bg:"44.84",bf:"8.67",bi:"1.47",kh:"11.36",cm:"21.88",ca:"1563.66",cv:"1.57",cf:"2.11",td:"7.59",cl:"199.18",cn:"5745.13",co:"283.11",km:"0.56",cd:"12.6",cg:"11.88",cr:"35.02",ci:"22.38",hr:"59.92",cy:"22.75",cz:"195.23",dk:"304.56",dj:"1.14",dm:"0.38","do":"50.87",ec:"61.49",eg:"216.83",sv:"21.8",gq:"14.55",er:"2.25",ee:"19.22",et:"30.94",fj:"3.15",fi:"231.98",fr:"2555.44",ga:"12.56",gm:"1.04",ge:"11.23",de:"3305.9",gh:"18.06",gr:"305.01",gd:"0.65",gt:"40.77",gn:"4.34",gw:"0.83",gy:"2.2",ht:"6.5",hn:"15.34",hk:"226.49",hu:"132.28",is:"12.77","in":"1430.02",id:"695.06",ir:"337.9",iq:"84.14",ie:"204.14",il:"201.25",it:"2036.69",jm:"13.74",jp:"5390.9",jo:"27.13",kz:"129.76",ke:"32.42",ki:"0.15",kr:"986.26",undefined:"5.73",kw:"117.32",kg:"4.44",la:"6.34",lv:"23.39",lb:"39.15",ls:"1.8",lr:"0.98",ly:"77.91",lt:"35.73",lu:"52.43",mk:"9.58",mg:"8.33",mw:"5.04",my:"218.95",mv:"1.43",ml:"9.08",mt:"7.8",mr:"3.49",mu:"9.43",mx:"1004.04",md:"5.36",mn:"5.81",me:"3.88",ma:"91.7",mz:"10.21",mm:"35.65",na:"11.45",np:"15.11",nl:"770.31",nz:"138",ni:"6.38",ne:"5.6",ng:"206.66",no:"413.51",om:"53.78",pk:"174.79",pa:"27.2",pg:"8.81",py:"17.17",pe:"153.55",ph:"189.06",pl:"438.88",pt:"223.7",qa:"126.52",ro:"158.39",ru:"1476.91",rw:"5.69",ws:"0.55",st:"0.19",sa:"434.44",sn:"12.66",rs:"38.92",sc:"0.92",sl:"1.9",sg:"217.38",sk:"86.26",si:"46.44",sb:"0.67",za:"354.41",es:"1374.78",lk:"48.24",kn:"0.56",lc:"1",vc:"0.58",sd:"65.93",sr:"3.3",sz:"3.17",se:"444.59",ch:"522.44",sy:"59.63",tw:"426.98",tj:"5.58",tz:"22.43",th:"312.61",tl:"0.62",tg:"3.07",to:"0.3",tt:"21.2",tn:"43.86",tr:"729.05",tm:0,ug:"17.12",ua:"136.56",ae:"239.65",gb:"2258.57",us:"14624.18",uy:"40.71",uz:"37.72",vu:"0.72",ve:"285.21",vn:"101.99",ye:"30.02",zm:"15.69",zw:"5.57"},$scope.worldMap={map:"world_en",backgroundColor:null,color:"#ffffff",hoverOpacity:.7,selectedColor:"#666666",enableZoom:!0,showTooltip:!0,values:sample_data,scaleColors:["#C4FFFF","#07C0BB"],normalizeFunction:"polynomial"},$scope.USAMap={map:"usa_en",backgroundColor:null,color:"#ffffff",hoverColor:"#999999",selectedColor:"#666666",enableZoom:!0,showTooltip:!0,selectedRegion:"MO"},$scope.europeMap={map:"europe_en",backgroundColor:null,color:"#ffffff",hoverOpacity:.7,hoverColor:"#999999",enableZoom:!1,showTooltip:!1,values:sample_data,scaleColors:["#C4FFFF","#07C0BB"],normalizeFunction:"polynomial"}}])}.call(this),function(){"use strict";angular.module("app.page.ctrls",[]).controller("invoiceCtrl",["$scope","$window",function($scope){return $scope.printInvoice=function(){var originalContents,popupWin,printContents;return printContents=document.getElementById("invoice").innerHTML,originalContents=document.body.innerHTML,popupWin=window.open(),popupWin.document.open(),popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="styles/main.css" /></head><body onload="window.print()">'+printContents+"</html>"),popupWin.document.close()}}])}.call(this),function(){"use strict";angular.module("app.tables",[])
+.controller("tableCtrl",["$scope","$filter","$http","$rootScope","$timeout",
+	function($scope,$filter,$http,$rootScope,$timeout)
 	{
-		console.log("sdfdsfdsf");
+		$scope.country ="";
+	    	$scope.city = "";
 		var init; 
 		$scope.stores=[{name:"Nijiya Market",price:"$$",sales:292,rating:4},
 		{name:"Eat On Monday Truck",price:"$",sales:119,rating:4.3},
@@ -164,7 +232,8 @@
 				.success(function(data){
 					if (data.status =="true")
 						{
-						$scope.message = data.message;
+						 $scope.message = data.message;
+						setTimeout(function() {  $scope.message = "";}, 2);
 						$rootScope.countryList.country.push(data.country);
 						$scope.country = "";
 						}
@@ -172,11 +241,13 @@
 						{
 						  $scope.message = "Db error";
 						}
+
 				})
 				.error(function(error){
 					console.log(error);
 					$scope.message = "Check server status"
 				})
+                      
            };
            $scope.createCategory = function()
 	      {
@@ -414,13 +485,13 @@ $scope.search=function(){return $scope.filteredStores=$filter("filter")($scope.s
 	.when("/city",{templateUrl:"views/ui/city.html"})
 	.when("/category",{templateUrl:"views/ui/category.html"})
 	.when("/event",{templateUrl:"views/ui/events.html"})
-	.when("/comment",{templateUrl:"views/ui/widgets.html"})
+	.when("/viewevent",{templateUrl:"views/ui/widgets.html"})
 	.when("/news",{templateUrl:"views/ui/components.html"})
 	.when("/photo",{templateUrl:"views/ui/timeline.html"})
 	.when("/twittertag",{templateUrl:"views/ui/nested-lists.html"})
 	.when("/user",{templateUrl:"views/ui/pricing-tables.html"})
 	.when("/video",{templateUrl:"views/forms/elements.html"})
-	.when("/forms/layouts",{templateUrl:"views/forms/layouts.html"})
+	.when("/comment",{templateUrl:"views/forms/layouts.html"})
 	.when("/forms/validation",{templateUrl:"views/forms/validation.html"})
 	.when("/forms/wizard",{templateUrl:"views/forms/wizard.html"})
 	.when("/maps/gmap",{templateUrl:"views/maps/gmap.html"})

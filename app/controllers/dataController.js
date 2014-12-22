@@ -286,4 +286,19 @@ dataController.findEvent = function(req,res)
       }
   })
 }
+dataController.getcategory = function(req,res)
+{
+  var th = this;
+  Category.find({},function(err,results){
+    if (err)
+      {
+         console.log(err);
+         th.res.json({message : "Db Error",status : false});
+      }
+      else{
+        console.log(results);
+        th.res.json({category : results,status : true});
+      }
+  })
+}
 module.exports = dataController;

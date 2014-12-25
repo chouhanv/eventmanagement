@@ -4,7 +4,12 @@ var locomotive = require('locomotive')
    City    = require('../models/cities'),
    Category = require('../models/categories'),
    User      = require('../models/users'),
-   Event      = require('../models/events');
+   Event      = require('../models/events'),
+   NewsType      = require('../models/newstype'),
+   News     = require('../models/news'),
+   fs = require('fs'),
+   path = require('path'),
+   AWS = require('aws-sdk');
 
 var dataController = new Controller();
 
@@ -34,7 +39,6 @@ dataController.findCountry = function(req,res)
          th.res.json({message : "Db Error",status : false});
       }
       else{
-        console.log(results);
         th.res.json({country : results,status : true});
       }
   })
@@ -160,7 +164,7 @@ dataController.findcategory = function(req,res)
          th.res.json({message : "Db Error",status : false});
       }
       else{
-        console.log(results);
+        
         th.res.json({category : results,status : true});
       }
   })
@@ -256,20 +260,60 @@ dataController.getCountryCity = function(){
   });
 }
 dataController.createEvent = function(req,res){
-var th = this;
-var data = th.req.body.event;
-Event.create(data,function(err,results){
-  if (err)
-    {
-      console.log(err);
-      th.res.json({message : "Db Error",status : "false"});
-      }
-    else
-    {
-      th.res.json({message : "Event added successfully",status : "true",event : results});
-    }
-})
 
+var th = this;
+var events1 = JSON.parse(th.req.body.saveEvent);
+var events = events1.events;
+var data = th.req.body.event;
+var file = th.req.files.file;
+var temp_folder_path = path.resolve(__dirname + "../../../public/tmp/");
+var file_name = new Date().getTime()+file.name;
+var source = temp_folder_path + "/" + file_name;
+var bucketName = 'newsduck';
+var imageURL = "https://s3.amazonaws.com/"+bucketName+"/"+file_name;
+fs.readFile(file.path, function (err, data) {
+  if(err){
+    console.log(err)
+  } else {
+    fs.writeFile(source, data, function (err) {
+      if(err){
+        console.log(err);
+      } else {
+        AWS.config.update({accessKeyId: 'AKIAIDOWXHHGQO7LJPNA', secretAccessKey: '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'});
+        console.log(data);
+        fs.readFile(source, function (err, data) {
+          if(err){
+            cb( err, null);
+          } else {
+            
+            var s3bucket = new AWS.S3({params: {Bucket: bucketName}});
+
+            s3bucket.putObject({Key: file_name, Body: data,ACL:'public-read'}, function(err, data) {
+              if(err){
+                console.log(err);
+              } else {
+                console.log(imageURL);
+                events.imageURL = imageURL;
+                Event.create({events : events,newses : events1.newses,phoneNumbers : events1.phoneNumbers,twittertags : events1.twittertags,website : events1.website},function(err,results){
+                  if (err)
+                    {
+                      console.log(err);
+                      th.res.json({message : "Db Error",status : "false"});
+                      }
+                    else
+                    {
+                      th.res.json({message : "Event added successfully",status : "true",event : results});
+                    }
+                 })
+              }
+            });
+          }
+        });
+
+      }
+    });
+  }
+});
 }
 dataController.findEvent = function(req,res)
 {
@@ -281,7 +325,7 @@ dataController.findEvent = function(req,res)
          th.res.json({message : "Db Error",status : false});
       }
       else{
-        console.log(results);
+        
         th.res.json({event : results,status : true});
       }
   })
@@ -296,9 +340,100 @@ dataController.getcategory = function(req,res)
          th.res.json({message : "Db Error",status : false});
       }
       else{
-        console.log(results);
+      
         th.res.json({category : results,status : true});
       }
+  })
+}
+dataController.createnewstype = function(req,res) {
+var newstype = this.req.param('newstype');
+var th = this;
+NewsType.create({newstype : newstype},function(err,results){
+  if (err)
+    {
+      console.log(err);
+      th.res.json({message : "Db Error",status : "false"});
+      }
+    else
+    {
+      th.res.json({message : "newstype added successfully",status : "true",newstype : results});
+    }
+})
+
+}
+dataController.findNewsType = function(req,res)
+{
+  var th = this;
+  NewsType.find({},function(err,results){
+    if (err)
+      {
+         console.log(err);
+         th.res.json({message : "Db Error",status : false});
+      }
+      else{
+        
+        th.res.json({newstype : results,status : true});
+      }
+  })
+}
+dataController.editnewstype = function(req,res)
+{
+  var th = this;
+  var newstype = th.req.param('newstype');
+  var id      = th.req.param('id');
+  NewsType.update({_id : id},{newstype : newstype},function(err,results){
+    if (err){
+      console.log(err);
+      th.res.json({message : "Db Error",status : false});
+    }
+    else{
+      th.res.json({message : "Newstype Updated successfully",status : true,newstype : results});
+    }
+  })
+}
+dataController.deletenewstype = function(req,res)
+{
+  var th = this;
+  var id = th.req.param('id');
+  NewsType.remove({_id : id},function(err,results){
+    if (err){
+        console.log(err);
+        th.res.json({message : "Db Error",status : false});
+      }
+      else{
+        th.res.json({message : "Newstype successfully deleted",newstype : results,status : true});
+      }
+  })
+}
+dataController.createNews = function(req,res){
+var th = this;
+var data = th.req.body.news;
+News.create(data,function(err,results){
+  if (err)
+    {
+      console.log(err);
+      th.res.json({message : "Db Error",status : "false"});
+    }
+    else
+    {
+      th.res.json({message : "News added successfully",status : "true",news : results});
+    }
+})
+}
+dataController.findnews = function(req,res)
+{
+  var th = this;
+  News.find({})
+            .populate('newstypeid')
+            .exec(function(err,results){
+            if (err)
+              {
+                 console.log(err);
+                 th.res.json({message : "Db Error",status : false});
+              }
+              else{
+                th.res.json({news : results,status : true});
+              }
   })
 }
 module.exports = dataController;

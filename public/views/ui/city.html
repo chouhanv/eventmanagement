@@ -62,7 +62,7 @@
                 <tr  data-ng-repeat="city in cityList.city | filter : searchKeywords">
                    <td>{{city.countryid.country}}</td>
                   <td>{{city.city}}</td>
-                  <td><a href="" ng-click="open(city,'city')">Edit</a>&nbsp;&nbsp;<span><a href="" ng-click="deleteCity(city,$index)">Delete</a></span></td>  
+                  <td><a href="" ng-click="open(city,'city')"><img class="img-circle img30_30" alt="" src="images/edit2.jpg"></a>&nbsp;&nbsp;<span><a href="" ng-click="deleteCity(city,$index)"><img class="img-circle img30_30" alt="" src="images/delete.png"></a></span></td>  
                 </tr>
             </tbody>
         </table>

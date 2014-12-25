@@ -55,7 +55,7 @@
             <tbody>
                 <tr data-ng-repeat="category in categoryList.category |filter : searchKeywords">
                      <td>{{category ? category.category : 'No data found'}}</td>
-                    <td><a href="" ng-click="open(category,'category')">Edit</a>&nbsp;&nbsp;<span><a href="" ng-click="deleteCategory(category,$index)">Delete</a></span></td>    
+                    <td><a href="" ng-click="open(category,'category')"><img class="img-circle img30_30" alt="" src="images/edit2.jpg"></a>&nbsp;&nbsp;<span><a href="" ng-click="deleteCategory(category,$index)"><img class="img-circle img30_30" alt="" src="images/delete.png"></a></span></td>    
                 </tr>
             </tbody>
         </table>

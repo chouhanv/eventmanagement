@@ -1,0 +1,195 @@
+<div class="page page-table" data-ng-controller="tableCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Create News</strong></div>
+      <div class="form-group" data-ng-init="findNewsType()">
+         <form ng-submit="createNews()" enctype="multipart/form-data">
+            <div class="col-md-5 colm-left"><!--colm-left start -->
+                  <div class="form-group">
+                    <div class="name-block"><label for="">Title*</label></div> 
+                    <div class="row">
+                      <div class="col-md-12">
+                      <input  type="text" class="form-control" placeholder="News Title*" data-ng-model="news.title"> 
+                      </div>
+                   </div>
+                </div>
+                <div class="form-group">
+                  <div class="name-block"><label for="">NewsType*</label></div> 
+                    <div class="row">
+                      <div class="col-md-12">
+                      <select class="form-control selct-refer" data-ng-model="news.newstypeid">
+                         <option ng-selected="news.newstypeid==''">--News Type--</option>
+                      <option value="{{newstype._id}}"  ng-repeat="newstype in newstypeList.newstype">{{newstype.newstype}}</option>
+                       </select>
+                      </div>
+                  </div>
+               </div>
+       </div><!--colm left close-->
+             <div class="col-md-5 right-sectn"> <!--colm-right start-->
+                <div class="form-group">
+                    <div class="name-block"><label for="">Link*</label></div> 
+                    <div class="row">
+                       <div class="col-md-12">
+                           <input type="text" class="form-control" placeholder="News Link*" data-ng-model="news.newslink">                        
+                       </div>
+                    </div>
+                  </div>
+                 <div class="form-group">
+                  <div class="name-block"><label for="">Created Date</label></div> 
+                  <div class="row">
+                     <div class="col-md-12">
+                       <input  id="createddate" data-ng-init="initlizeDatePicker('createddate');" type="text" class="form-control" placeholder="Created Date*" ng-model="news.createddate">
+                  </div>
+                </div>
+              </div>
+        </div><!--colm right close-->
+                 <div class="butn-box-content"  style="margin-left:1010px;">                         
+                  <div class="butn-box">              
+                   <button class="btn btnn-top btn-primary" type="submit">Save</button>
+                  </div>
+                </div>
+              </form>
+               {{message}}{{deletemessage}}{{editmessage}}
+      </div><!--form group-->
+        <div class="table-filters">
+            <div class="row">
+                <div class="col-sm-4 col-xs-6">
+                    <form>
+                        <input type="text"
+                               placeholder="search"
+                               class="form-control"
+                               data-ng-model="searchKeywords"
+                               data-ng-keyup="search()">
+                    </form>
+                </div>
+                <div class="col-sm-3 col-xs-6 filter-result-info">
+                    <span>
+                        Showing {{filteredStores.length}}/{{newstypeList.newstype.length}} entries
+                    </span>              
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive" data-ng-controller="ModalDemoCtrl">
+            <thead>
+                <tr>
+                    <th><div class="th">
+                        Title
+                        
+                    </div></th>
+                     <th><div class="th">
+                        Link
+                        
+                    </div></th>
+                     <th><div class="th">
+                        created Date
+                        
+                    </div></th>
+                     <th><div class="th">
+                        News Type
+                        
+                    </div></th>
+                    <th><div class="th">
+                       Action
+                    </div></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="store in newsList.news |filter : searchKeywords">
+                     <td>{{store ? store.title : 'No data found'}}</td>
+                     <td>{{store ? store.newslink : 'No data found'}}</td>
+                     <td>{{store ? store.createddate : 'No data found'}}</td>
+                     <td>{{store ? store.newstypeid.newstype : 'No data found'}}</td>
+                    <td><a href="" ng-click="open(store,'news')"><img class="img-circle img30_30" alt="" src="images/edit2.jpg"></a>&nbsp;&nbsp;<span><a href="" ng-click="deletenewstype(store,$index)"><img class="img-circle img30_30" alt="" src="images/delete.png"></a></span></td> 
+                </tr>
+            </tbody>
+        </table>
+
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show 
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select> 
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                ng-model="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                ng-change="select(currentPage)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+      <script type="text/ng-template" id="myModalContent.html">
+            <div class="modal-header">
+                <h3>Edit News</h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <div class="panel-body">
+                            <form class="form-horizontal adminex-form" role="form" ng-submit="editnews()">
+                                <div class="col-md-5 colm-left"><!--colm-left start -->
+                  <div class="form-group">
+                    <div class="name-block"><label for="">Title*</label></div> 
+                    <div class="row">
+                      <div class="col-md-12">
+                      <input  type="text" class="form-control" placeholder="News Title*" data-ng-model="title1"> 
+                      </div>
+                   </div>
+                </div>
+                <div class="form-group">
+                  <div class="name-block"><label for="">NewsType*</label></div> 
+                    <div class="row">
+                      <div class="col-md-12">
+                      <select class="form-control selct-refer" data-ng-model="newstypeid1">
+                         <option value="{{newstypeid}}" ng-selected="'newstypeid1' == 'newstypeid1'">{{newstype1}}</option>
+                         <option value="{{newstype._id}}"  ng-repeat="newstype in newstypeList.newstype">{{newstype.newstype}}</option>
+                       </select>
+                      </div>
+                  </div>
+               </div>
+             </div><!--colm left close-->
+             <div class="col-md-5 right-sectn"> <!--colm-right start-->
+                <div class="form-group">
+                    <div class="name-block"><label for="">Link*</label></div> 
+                    <div class="row">
+                       <div class="col-md-12">
+                           <input type="text" class="form-control" placeholder="News Link*" data-ng-model="newslink1">                        
+                       </div>
+                    </div>
+                  </div>
+                 <div class="form-group">
+                  <div class="name-block"><label for="">Created Date</label></div> 
+                  <div class="row">
+                     <div class="col-md-12">
+                       <input  id="createddate" data-ng-init="initlizeDatePicker('createddate');" type="text" class="form-control" placeholder="Created Date*" ng-model="createddate1">
+                  </div>
+                       <div class="col-md-12">
+                       <input  type="hidden" class="form-control"ng-model="newstypeid">
+                  </div>
+                </div>
+              </div>
+        </div>
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                               </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+           </div>
+           </form>
+        </script>
+
+</div>

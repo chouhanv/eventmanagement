@@ -24,6 +24,13 @@ module.exports = function routes() {
   this.post('/socialid','data#socialid');
   this.get('/getCountryCity','data#getCountryCity');
   this.post('/createEvent','data#createEvent');
-  this.post('/findEvent','data#findEvent');
+  this.get('/findEvent','data#findEvent');
   this.post('/getcategory','data#getcategory');
+  this.post('/createnewstype','data#createnewstype');
+  this.post('/findNewsType','data#findNewsType');
+  this.post('/editnewstype','data#editnewstype');
+  this.post('/deletenewstype','data#deletenewstype');
+  this.post('/createNews','data#createNews');
+  this.post('/findnews','data#findnews');
+  
 }

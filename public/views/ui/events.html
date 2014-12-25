@@ -1,7 +1,7 @@
 <div class="page" data-ng-controller="DatepickerDemoCtrl" >
   <section class="panel panel-default">
     <div class="panel-heading">Create Event</div>
-    <div class="panel-body" data-ng-init="getCountryCity(); getcategory();initialize(22.7045005,75.8737288);"> <!-- white color body start from hear -->
+    <div class="panel-body" data-ng-init="getCountryCity(); getcategory();initialize(22.7045005,75.8737288); findNewsType()"> <!-- white color body start from hear -->
       <div class="form-group">
          <form ng-submit="createEvent()" enctype="multipart/form-data">
             <div class="col-md-5 colm-left"><!--colm-left start -->
@@ -34,11 +34,49 @@
                      </div>
                   </div>
               </div>
+              <div class="form-group" ng-repeat="news in news">
+                <div class="name-block"><label for="">News*</label></div>
+                  <div class="row">
+                     <div class="col-md-6">
+                      <input  type="text" class="form-control" placeholder="News Title*" data-ng-model="news.title"> 
+                      </div>
+                      <div class="col-md-6">
+                           <input type="text" class="form-control" placeholder="News Link*" data-ng-model="news.newslink">                        
+                       </div> 
+                  </div>
+                  <br>
+                  <br>
+                  <div class="row">
+                      <div class="col-md-12">
+                      <select class="form-control selct-refer" data-ng-model="news.newstypeid">
+                         <option ng-selected="news.newstypeid==''">--News Type--</option>
+                      <option value="{{newstype._id}}"  ng-repeat="newstype in newstypeList.newstype">{{newstype.newstype}}</option>
+                       </select>
+                      </div>
+                  </div>      
+              </div>
+               <div class="form-group">
+                 <button type="button" ng-click="expandNews()">+</button>
+              </div>
+                 <div class="form-group" ng-repeat="eventwebsite in eventwebsite">
+                 <div class="name-block"><label for="">EventWebSites*</label></div>
+                  <div class="row">
+                     <div class="col-md-6">
+                      <input  type="text" class="form-control" placeholder="Event Web Site Url*" data-ng-model="eventwebsite.websiteurl">
+                      </div>
+                      <div class="col-md-6">
+                      <input  type="text" class="form-control" placeholder="Event web site label*" data-ng-model="eventwebsite.websitelabel">
+                      </div>
+                    </div>
+                  </div>
+                   <div class="form-group">
+                 <button type="button" ng-click="expandwebsite()">+</button>
+              </div>
             <div class="form-group">
               <div class="name-block"><label for="">Start Date</label></div> 
               <div class="row">
                 <div class="col-md-12">
-                   <input  id="dtstart" data-ng-init="initlizeDatePicker('dtstart');"  type="text" class="form-control" placeholder="Event Start Date*" data-ng-model="event.dtstart">
+                   <input  id="dtstart" data-ng-init="initlizeDatePicker('dtstart',$index);"  type="text" class="form-control" placeholder="Event Start Date*" data-ng-model="event.dtstart">
                 </div>
               </div>
           </div>
@@ -80,7 +118,7 @@
                      <div class="name-block"><label for="">PhotoUrl*</label></div> 
                      <div class="row">
                      <div class="col-md-12">
-                        <input  type="file" class="form-control" placeholder="Photos Url*" data-ng-model="event.photosurl" multiple >      
+                        <input  type="file" class="form-control" placeholder="Photos Url*" data-ng-model="event.photosurl" id="eventphoto" multiple >      
                     </div>
                   </div>
                 </div>
@@ -103,11 +141,39 @@
                   </div>
                 </div>
               </div>
+              <div class="form-group" ng-repeat="twitter in twitter">
+                <div class="name-block"><label for="">TwitterTag*</label></div>
+                  <div class="row">
+                     <div class="col-md-6">
+                      <input  type="text" class="form-control" placeholder="Twitter Tag*" data-ng-model="twitter.tag"> 
+                      </div>
+                      <div class="col-md-6">
+                           <input type="text" class="form-control" placeholder="Twitter Tag Link*" data-ng-model="twitter.taglink">                        
+                       </div> 
+                  </div>
+                </div>
+                 <div class="form-group">
+                 <button type="button" ng-click="expandtwittertag()">+</button>
+                </div>
+                 <div class="form-group" ng-repeat="eventphoneno in eventphonenumber">
+                 <div class="name-block"><label for="">Event Phone Number*</label></div>
+                  <div class="row">
+                     <div class="col-md-6">
+                      <input  type="text" class="form-control" placeholder="Phone Number*" data-ng-model="eventphoneno.phoneNumber">
+                      </div>
+                      <div class="col-md-6">
+                      <input  type="text" class="form-control" placeholder="Phone label" data-ng-model="eventphoneno.phonelabel">
+                      </div>
+                    </div>
+                  </div>
+                   <div class="form-group">
+                 <button type="button" ng-click="expandphoneNumber()">+</button>
+              </div>
                  <div class="form-group">
                   <div class="name-block"><label for="">End Date</label></div> 
                   <div class="row">
                      <div class="col-md-12">
-                       <input  id="dtend" data-ng-init="initlizeDatePicker('dtend');" type="text" class="form-control" placeholder="Event End Date*" ng-model="event.dtend">{{event.dtend}}
+                       <input  id="dtend" data-ng-init="initlizeDatePicker('dtend',$index);" type="text" class="form-control" placeholder="Event End Date*" ng-model="event.dtend">{{event.dtend}}
                   </div>
                 </div>
               </div>

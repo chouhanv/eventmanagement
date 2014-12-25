@@ -1,0 +1,112 @@
+<div class="page page-table" data-ng-controller="tableCtrl">
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-heading"><strong><span class="glyphicon glyphicon-th"></span> Create NewsType</strong></div>
+        <div class="row">
+      <div class="col-lg-12">
+            <section class="panel">
+                <div class="panel-body">
+                    <form class="form-horizontal adminex-form" role="form" ng-submit="createnewstype()">
+                            <div class="form-group">
+                                <div class="col-sm-11">
+                                <input class="form-control" type="text" placeholder="Enter News Type" data-ng-model="newstype">
+                                </div>
+                                 <button type="submit" class="btn btn-primary">Add</button>
+                            </div>
+                    </form>
+               </div>
+               {{message}} {{editmessage}}  {{deletemessage}} 
+            </section>
+       </div>
+    </div>
+        <div class="table-filters">
+            <div class="row">
+                <div class="col-sm-4 col-xs-6">
+                    <form>
+                        <input type="text"
+                               placeholder="search"
+                               class="form-control"
+                               data-ng-model="searchKeywords"
+                               data-ng-keyup="search()">
+                    </form>
+                </div>
+                <div class="col-sm-3 col-xs-6 filter-result-info">
+                    <span>
+                        Showing {{filteredStores.length}}/{{newstypeList.newstype.length}} entries
+                    </span>              
+                </div>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive" data-ng-controller="ModalDemoCtrl">
+            <thead>
+                <tr>
+                    <th><div class="th">
+                        Country
+                        
+                    </div></th>
+                    <th><div class="th">
+                       Action
+                    </div></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-ng-repeat="store in newstypeList.newstype |filter : searchKeywords">
+                     <td>{{store ? store.newstype : 'No data found'}}</td>
+                    <td><a href="" ng-click="open(store,'newstype')"><img class="img-circle img30_30" alt="" src="images/edit2.jpg"></a>&nbsp;&nbsp;<span><a href="" ng-click="deletenewstype(store,$index)"><img class="img-circle img30_30" alt="" src="images/delete.png"></a></span></td> 
+                </tr>
+            </tbody>
+        </table>
+
+        <footer class="table-footer">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+                    <span>
+                        Show 
+                        <select data-ng-model="numPerPage"
+                                data-ng-options="num for num in numPerPageOpt"
+                                data-ng-change="onNumPerPageChange()">
+                        </select> 
+                        entries per page
+                    </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                ng-model="currentPage"
+                                total-items="filteredStores.length"
+                                max-size="4"
+                                ng-change="select(currentPage)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    </section>
+      <script type="text/ng-template" id="myModalContent.html">
+            <div class="modal-header">
+                <h3>Edit NewsType</h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <div class="panel-body">
+                            <form class="form-horizontal adminex-form" role="form" ng-submit="editnewstype()">
+                                <div class="form-group">
+                                    <div class="col-sm-11">
+                                        <input class="form-control" type="text" placeholder="Enter Country" data-ng-model="editnewstypename">
+
+                                            <input class="form-control" type="hidden" placeholder="Enter Country" data-ng-model="editnewtypeid">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                               </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+           </div>
+           </form>
+        </script>
+
+</div>
